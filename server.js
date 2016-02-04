@@ -18,7 +18,7 @@ app.get('/api/users',function(req,res){
         {username: 'Pushpinder', first: 'Pushpinder', last: 'Singh'},
         {username: 'Mavez', first: 'Mavez', last: 'Singh'},
         {username: 'Rahul', first: 'Rahul', last: 'Bahal'},
-        {username: 'Parth', first: 'Parth', last: 'Aluwalia'},
+        {username: 'Parth', first: 'Parth', last: 'Ahluwalia'}, // Correcting my last name! - Parth Ahluwalia
     ];
     res.json(users);
     //can also write res.send(users);
