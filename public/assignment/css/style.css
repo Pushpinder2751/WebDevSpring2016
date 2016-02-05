@@ -118,3 +118,8 @@ p {
 .form_style{
     padding-top: 20px;
 }
+
+hr {
+    display: block;
+    border-width: 3px;
+}
