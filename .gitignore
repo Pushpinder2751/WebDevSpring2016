@@ -2,3 +2,6 @@
 node_modules
 bootstrap.min.css
 bootstrap.min.js
+jquery-2.2.0.min.js
+angular.js
+angular-route.js
