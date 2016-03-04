@@ -7,28 +7,33 @@
         .module("FormBuilderApp")
         .config(['$routeProvider', function($routeProvider) {
             $routeProvider
-                .when("/", {
+            // I dont know if I need this. Check with Jose.
+                //.when("/", {
+                //    templateUrl: "views/home/home.view.html",
+                //    controller: "MainController"
+                //})
+                .when("/home",{
                     templateUrl: "views/home/home.view.html",
-                    controller: "MainController"
+                    controller: "HeaderController"
                 })
                 .when("/register", {
                     templateUrl: "views/users/register.view.html",
-                    controller: "MainController"
+                    controller: "RegisterController"
                 })
                 .when("/login", {
                     templateUrl: "views/users/login.view.html",
-                    controller: "MainController"
+                    controller: "LoginController"
                 })
                 .when("/profile", {
                     templateUrl: "views/users/profile.view.html",
-                    controller: "SidebarController"
+                    controller: "ProfileController"
                 })
                 .when("/admin", {
                     templateUrl: "views/users/admin.view.html",
                     controller: "MainController"
                 })
                 .otherwise({
-                    redirectTo: "/"
+                    redirectTo: "/home"
                 });
 
         }]);

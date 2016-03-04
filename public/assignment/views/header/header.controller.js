@@ -9,7 +9,7 @@
         .controller("HeaderController", HeaderController)
 
         function HeaderController(){
-            console.log("headerController");
+            console.log("HeaderController");
             //nothing for now
         }
 })();
