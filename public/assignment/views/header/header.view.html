@@ -17,9 +17,11 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#/register">Register</a></li>
                 <li><a href="#/login">Login</a></li>
-                <li><a href="#">Username</a></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="#/profile" ng-class="{'not-active' : $location.url() == '/profile'}"
+                       ng-show="user">{{user.username}}</a></li>
+                <li><a ng-show="user" ng-click="logout(user)">Logout</a></li>
             </ul>
+            <!-- Where is the highlighting happenint! -->
 
             <!-- I do not need a search bar for now. Leaving it here for later use. -->
             <!--<form class="navbar-form navbar-right">

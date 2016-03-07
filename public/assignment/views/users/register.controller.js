@@ -9,7 +9,7 @@
         .controller("RegisterController", RegisterController);
 
     function RegisterController($rootScope,$scope,$location, UserService) {
-        console.log("How do I fucking do this!");
+        console.log("Hello from RegisterController!");
         $scope.register = register;
 
         function register(user){

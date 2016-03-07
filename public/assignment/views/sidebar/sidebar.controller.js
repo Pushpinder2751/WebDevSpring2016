@@ -9,6 +9,10 @@
         .controller("SidebarController", SidebarController);
 
     function SidebarController(){
-        console.log("How do I fucking do this!");
+
+
+            console.log("How do I fucking do this!");
+
+
     }
 })();

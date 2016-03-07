@@ -8,8 +8,20 @@
         .module("FormBuilderApp")
         .controller("HeaderController", HeaderController)
 
-        function HeaderController(){
+        function HeaderController($scope, $location, $rootScope){
             console.log("HeaderController");
-            //nothing for now
+            $scope.isLoggedIn = isLoggedIn;
+            $scope.logout = logout;
+
+            // get to know more about this
+            function isLoggedIn() {
+                return ($location.url() != '/home' && $location.url() != '/login' && $location.url() != '/register');
+            }
+
+            function logout(user){
+                delete $rootScope.user;
+                $location.url("/");
+            }
+
         }
 })();

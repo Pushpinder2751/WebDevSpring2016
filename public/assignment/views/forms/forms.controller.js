@@ -1,3 +1,12 @@
-/**
- * Created by pushy on 2/16/16.
- */
+
+"use strict";
+(function(){
+    angular
+        .module("FormBuilderApp")
+        .controller("FormController", FormController)
+
+    function FormController(){
+        console.log("Hello from FormController");
+        //nothing for now
+    }
+})();

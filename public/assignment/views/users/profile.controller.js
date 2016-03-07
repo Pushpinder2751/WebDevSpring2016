@@ -9,6 +9,11 @@
         .controller("ProfileController", ProfileController);
 
     function ProfileController($rootScope,$scope,$location, UserService) {
+        if(!$rootScope.user){
+            console.log("No user yet!");
+            $location.path("/login");
+            return;
+        }
         console.log("In Profile Controller");
         $scope.update = update;
         $scope.user = $rootScope.user;
@@ -23,6 +28,7 @@
 
         }
         // not sure what I need to do here
+        //this should somehow update the view
         function updatedUser(){
             console.log("Heloo");
             //$location.url("/profile");

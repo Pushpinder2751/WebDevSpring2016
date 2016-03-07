@@ -1,3 +1,11 @@
-/**
- * Created by pushy on 2/16/16.
- */
+"use strict";
+(function(){
+    angular
+        .module("FormBuilderApp")
+        .controller("FieldsController", FieldsController)
+
+    function FieldsController(){
+        console.log("Hello from FeildsController");
+        //nothing for now
+    }
+})();
