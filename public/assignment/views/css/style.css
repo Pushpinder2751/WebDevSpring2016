@@ -111,10 +111,6 @@ p {
     border-radius: 50%;
 }
 
-.table-custom{
-    width: 70%;
-}
-
 .form_style{
     padding-top: 20px;
 }
@@ -122,4 +118,12 @@ p {
 hr {
     display: block;
     border-width: 3px;
+}
+
+.theadrow {
+    background-color: #cccccc;
+}
+
+.th-action {
+    width: 57px;
 }

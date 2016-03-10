@@ -5,11 +5,11 @@
 (function(){
     angular
         .module("FormBuilderApp")
-        .controller("LoginController", LoginController)
+        .controller("LoginController", LoginController);
 
     function LoginController($scope, $rootScope, $location, UserService){
         console.log("I am in LoginController");
-        // Do I have the username right now?
+
         $scope.login = login;
 
 
@@ -28,6 +28,6 @@
             }
         }
 
-        // how to update headerview after this.
+
     }
 })();

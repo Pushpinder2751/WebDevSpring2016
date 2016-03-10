@@ -10,6 +10,7 @@
 
         function HeaderController($scope, $location, $rootScope){
             console.log("HeaderController");
+
             $scope.isLoggedIn = isLoggedIn;
             $scope.logout = logout;
 
