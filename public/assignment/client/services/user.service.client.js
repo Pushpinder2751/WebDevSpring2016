@@ -7,8 +7,9 @@
         .module("FormBuilderApp")
         .factory("UserService", UserService);
 
-    function UserService(){
-        var current_users = [];
+    function UserService($http, $rootScope){
+        // asked by professor to remove this for assignment 3
+        /*var current_users = [];
         var current_users = [
             {        "_id":123, "firstName":"Alice",            "lastName":"Wonderland",
                 "username":"alice",  "password":"alice",   "roles": ["student"]                },
@@ -20,9 +21,12 @@
                 "username":"dan",    "password":"dan",     "roles": ["faculty", "admin"]},
             {        "_id":567, "firstName":"Edward",           "lastName":"Norton",
                 "username":"ed",     "password":"ed",      "roles": ["student"]                }
-        ];
+        ];*/
+
+
         // exposing the functions to the app
         var api = {
+            findUserByUsername: findUserByUsername,
             findUserByCredentials: findUserByCredentials,
             createUser: createUser,
             updateUser: updateUser,
@@ -31,72 +35,35 @@
         }
         return api;
 
-        function deleteUserById(userId,callback){
-            console.log("delete User by Id");
-            for(i = 0; i < current_users.length; i++){
-                if(userId == current_users[i]._id){
-                    // removing an item from an array.
-                    // find other ways to do it.
-                    current_users.splice(i,1);
-                }
-            }
-            callback(current_users);
+        function findUserByUsername(username) {
+            // not sure if this is the right way
+            return $http.get("/api/assignment/user?username"+ username);
+        }
+
+        function deleteUserById(userId){
+            //console.log("delete User by Id");
+            return $http.delete("/api/assignment/user/"+ userId);
         }
 
         // I am not sure if this is right
 
-        function findAllUsers(callback){
-            callback(current_users);
+        function findAllUsers(){
+            return $http.get("/api/assignment/user");
         }
 
-        function createUser(user,callback){
-            var id =(new Date).getTime();
-            var newUser = {
-                "_id":id,
-                "firstName":  "",
-                "lastName":"",
-                "username": user.username,
-                "password": user.password,
-                "roles": []
-            };
-
-            current_users.push(newUser);
-            callback(newUser);
+        function createUser(user){
+           return $http.post("/api/assignment/user", user);
         }
 
-        function updateUser(userId,user,callback){
-            console.log("update User");
-            for(i = 0; i < current_users.length; i++){
-                if( (current_users[i]._id) == userId){
-                    current_users[i].firstName = user.firstName;
-                    current_users[i].lastName = user.lastName;
-                    current_users[i].username = user.username;
-                    current_users[i].password = user.password;
-                }
-            }
-            callback(user);
+        function updateUser(userId,user){
+            //console.log("update User");
+            return $http.put("/api/assignment/user/"+userId, user);
         }
 
-        function findUserByCredentials(username, password, callback){
-            // noUser flag
-            var noUser = 0;
-
-            for(i = 0; i < current_users.length; i++){
-
-                if ( (current_users[i].username == username) && (current_users[i].password == password)){
-                    callback(current_users[i]);
-                    noUser++;
-                }
-            }
-            //console.log(noUser);
-            if(!noUser){
-
-                    console.log("user not found!");
-                    callback(null);
-            }
-        }
-        function callback(user){
-            return user;
+        // removing callback to use $http to retrieve user from server, eventually db
+        function findUserByCredentials(username, password){
+            // might need to fix this
+            return $http.get("/api/assignment/user?username="+username+"&password="+password);
         }
 
 
