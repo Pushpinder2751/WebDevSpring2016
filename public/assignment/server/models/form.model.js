@@ -14,7 +14,14 @@ module.exports = function(app) {
         findFormByTitle: findFormByTitle,
 
         // extra needed
-        findAllFormsForUser: findAllFormsForUser
+        findAllFormsForUser: findAllFormsForUser,
+
+        // functions for field.service.server.js
+        findFormField: findFormField,
+        findFieldById: findFieldById,
+        deleteFieldByid: deleteFieldByid,
+        createField: createField,
+        updateFieldById: updateFieldById
 
     };
     return api;
@@ -99,4 +106,62 @@ module.exports = function(app) {
         return userForms;
     }
 
+    // function for fields of form
+    function findFormField(formId) {
+        var fields = [];
+        for (var i in mock){
+            if(mock[i]._id === formId){
+                fields = mock[i].fields;
+                return fields;
+            }
+        }
+
+    }
+
+    function findFieldById(formId, fieldId) {
+        var field;
+        var form = findFormById(formId);
+
+        for(var i in form.fields){
+            if(form.fields[i] === fieldId){
+                field = form.fields[i];
+                return field;
+                // do I need to break here? return ends the program is'nt it?
+            }
+        }
+
+        // field not present in form
+        console.log("field not present in this form");
+        return null;
+    }
+
+    function deleteFieldById(formId, fieldId) {
+        var form = findFormById(formId);
+        for( var i in form){
+            if(form.fields[i]._id === fieldId){
+                // might need to update this
+                form.fields.splice(i, 1);
+                return;
+            }
+        }
+    }
+
+    function createField(formId, newField) {
+        var form = findFormById(formId);
+        newField._id = (new Date).getTime();
+        form.fields.push(newField);
+
+        // do I need to return this or not!?
+    }
+
+    function updateFieldById(formId, fieldId, updatedField) {
+        var form = findFormById(formId);
+        for(var i in form.fields){
+            if(form.fields[i]._id === formId){
+                form.fields[i] = updatedField;
+                // does this need to return something!?
+                return;
+            }
+        }
+    }
 };
