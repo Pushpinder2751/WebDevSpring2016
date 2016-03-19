@@ -24,42 +24,26 @@
         return api;
 
         function createFormForUser(userId, form){
-            return $http.post("/api/assignment/user/"+ userId+ "/form"+form);
+            return $http.post("/api/assignment/user/"+ userId+ "/form",form);
         }
 
         function findAllFormsForUser(userId){
-           return $http.get("/api/assignment/user/"+userId);
+           return $http.get("/api/assignment/form/user/"+userId+"/form");
         }
 
         function deleteFormById(formId){
-            return $http.delete("/api/assignment/form"+formId);
+            return $http.delete("/api/assignment/form/"+formId);
         }
 
         function updateFormById(formId, newForm){
-            return $http.put("/api/assignment/form"+formId, newForm);
+            return $http.put("/api/assignment/form/"+formId, newForm);
         }
 
         // might add later if needed
-       /* function checkExistingForm(userId, form1){
-
-            console.log("checkExistingfor.userId= "+userId);
-            console.log(form1);
-
-            var check_forms = forms.filter(function(form, index, arr){
-                return (form.userId === userId && form.title === form1.title);
-            });
-
-            console.log("Check_forms ="+check_forms.length);
-            if(check_forms.length == 0){
-                console.log("no similar form exists");
-                return 0
-            }
-            else{
-                console.log("Form already exists!");
-                alert("Form already exits");
-                return 1;
-            }
-        }*/
+        function checkExistingForm(userId, form){
+            //console.log("form.title = "+form.title);
+            return $http.get("/api/assignment/check/"+userId+"/"+form.title);
+        }
 
 
 

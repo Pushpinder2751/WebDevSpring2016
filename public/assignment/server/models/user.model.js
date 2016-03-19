@@ -1,11 +1,12 @@
 
+var mock = require("./user.mock.json");
 // where is function(app) used?
 module.exports = function(app){
 
     var api = {
         // generic data model requirements which all models must follow
         createUser: createUser,
-        findAlluser: findAllUser,
+        findAllUser: findAllUser,
         findUserById: findUserById,
         updateUser: updateUser,
         deleteUser: deleteUser,
@@ -28,7 +29,7 @@ module.exports = function(app){
         mock.push(newUser);
     }
 
-    function findAlluser () {
+    function findAllUser () {
         return mock;
     }
 

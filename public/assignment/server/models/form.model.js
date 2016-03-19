@@ -16,10 +16,12 @@ module.exports = function(app) {
         // extra needed
         findAllFormsForUser: findAllFormsForUser,
 
+        checkExistingForm: checkExistingForm,
+
         // functions for field.service.server.js
         findFormField: findFormField,
         findFieldById: findFieldById,
-        deleteFieldByid: deleteFieldByid,
+        deleteFieldById: deleteFieldById,
         createField: createField,
         updateFieldById: updateFieldById
 
@@ -28,6 +30,7 @@ module.exports = function(app) {
 
     // Create of CRUD
     function createForm (userId, form) {
+        console.log("create form title : "+form.title);
         var newForm = {
             _id: (new Date).getTime(),
             // keeping it simple for now, I don't know
@@ -36,9 +39,9 @@ module.exports = function(app) {
             userId: userId
 
         };
-
-        forms.push(newForm);
-        return forms;
+        console.log(newForm);
+        mock.push(newForm);
+        return mock;
     }
 
     function findAllForms () {
@@ -62,9 +65,11 @@ module.exports = function(app) {
     // Update of CRUD
     function updateFormById (formId, newForm) {
         formId = parseInt(formId);
+        console.log("update formId: "+formId);
+        console.log("update form: "+newForm );
         for(var i in mock){
             // might have to update this
-            if(mock[i]._id === formId){
+            if(mock[i]._id == formId){
                 mock[i].title = newForm.title;
                 mock[i].userId = newForm.userId;
                 return mock[i];
@@ -96,17 +101,23 @@ module.exports = function(app) {
         return null;
     }
 
-    function findAllFormsByUser(userId){
+    function findAllFormsForUser(userId){
         var userForms = [];
         for( var i in mock){
-            if(mock[i].userId === userId){
+            if(mock[i].userId == userId){
                 userForms.push(mock[i])
             }
         }
+        //console.log(userForms);
         return userForms;
     }
 
     // function for fields of form
+         /*for(i in mock){
+            console.log("mock : "+mock[i].title);
+            console.log("mock.id: "+mock[i].userId);
+        }*/
+
     function findFormField(formId) {
         var fields = [];
         for (var i in mock){
@@ -162,6 +173,33 @@ module.exports = function(app) {
                 // does this need to return something!?
                 return;
             }
+        }
+    }
+
+    function checkExistingForm(userId, form1){
+        //console.log("check");
+        //console.log("checkExistingfor.userId= "+userId);
+        //console.log("check existint form1 title "+form1);
+        /*for(i in mock){
+            console.log("mock : "+mock[i].title);
+            console.log("mock.id: "+mock[i].userId);
+        }*/
+        console.log("form1 "+form1);
+        console.log("userid: "+userId);
+        var check_forms = mock.filter(function(form, index, arr){
+            return (form.userId == userId && form.title == form1);
+        });
+
+        //console.log("Check_forms ="+check_forms.length);
+        if(check_forms.length == 0){
+            console.log("no similar form exists");
+            //console.log(userId);
+            //var x = 0;
+            return "0";
+        }
+        else{
+            console.log("Form already exists!");
+            return "1";
         }
     }
 };

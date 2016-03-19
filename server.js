@@ -32,6 +32,6 @@ app.get('/api/users',function(req,res){
     // send automatically detects json
 });
 
-
+require("./public/assignment/server/app.js")(app);
 
 app.listen(port, ipaddress);

@@ -26,9 +26,16 @@
 
             // gets all the forms associated with the user in current scope and then to ng-repeat
             function formsForCurrentUser(){
-                FormService.findAllFormsForUser(userId, function(formsByUserId){
+               // console.log("abc");
+                FormService
+                    .findAllFormsForUser(userId)
+                    .then(function (response) {
+                        console.log("abc : "+response.data);
+                        $scope.forms = response.data;
+                    });
+                /*{
                     $scope.forms = formsByUserId;
-                })
+                })*/
             }
 
             function addForm(form){
@@ -38,19 +45,34 @@
                     return;
                 }
 
+                //console.log("add form title :"+form.title);
+                var checkExistingForms = FormService
+                                            .checkExistingForm(userId, form)
+                                            .then(function (response) {
+                                                console.log("check "+response.data);
+                                                checkExistingForms = response.data;
 
-                var checkExistingForms = FormService.checkExistingForm(userId, form);
-                //for debugging
-                //console.log("check existing forms "+checkExistingForms);
+                                                if(checkExistingForms == 0){
 
-                if(!checkExistingForms){
-                    FormService.createFormForUser(userId, form, function(newForm){
-                        // not sure why
-                        $scope.selected = -1;
-                        $scope.form = {};
-                        formsForCurrentUser();
-                    });
-                }
+                                                    FormService
+                                                        .createFormForUser(userId, form)
+                                                        .then(function (response) {
+                                                            console.log("add form : "+ response.data);
+                                                            formsForCurrentUser();
+                                                            $scope.selected = -1;
+                                                            $scope.form = {};
+
+                                                        })
+                                                }
+                                                else{
+                                                    alert("Form already exits");
+                                                }
+
+                                            });
+
+
+
+
             }
 
             function updateForm(form){
@@ -59,11 +81,14 @@
                     console.log("user playing smart again!, pressing update without selecting a form!");
                 }
                 else {
-                    FormService.updateFormById(form._id, form, function(newForm){
+                    FormService
+                        .updateFormById(form._id, form)
+                        .then (function(response){
                         console.log("Form updated");
-                        console.log(form);
-                        // I think this is to update the new form
-                        $scope.forms[$scope.selected] = newForm;
+                        console.log(response.data);
+
+                        // how to change after the form is updated and not live.
+                        $scope.forms[$scope.selected] = response.data;
                         $scope.selected = -1;
                         $scope.form = {};
                         // need to use this after every select form
@@ -74,7 +99,9 @@
             }
 
             function deleteForm(formId){
-                FormService.deleteFormById(formId, function(updateForms){
+                FormService
+                    .deleteFormById(formId)
+                    .then (function(updateForms){
                     console.log("Form Deleted: "+formId+" :(");
                     // not sure why
                     $scope.form.title="";

@@ -18,7 +18,7 @@
                 <li ng-show="user === undefined"><a href="#/register">Register</a></li>
                 <li ng-show="user === undefined"><a href="#/login">Login</a></li>
                 <li><a href="#/profile" ng-class="{'not-active' : $location.url() == '/profile'}"
-                       ng-show="user">{{user.firstName}}</a></li>
+                       ng-show="user">{{user.username}}</a></li>
                 <li><a ng-show="user" ng-click="logout(user)">Logout</a></li>
             </ul>
             <!-- Where is the highlighting happenint! -->
