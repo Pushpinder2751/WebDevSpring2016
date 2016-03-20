@@ -1,36 +1,36 @@
 module.exports = function (app, formModel) {
-    app.get("/api/assignment/form/:formId/field", findFormField);
-    app.get("/api/assignment/form/:formId/field/:fieldId", findFieldById);
-    app.delete("/api/assignment/form/formId/field/:fieldId", deleteFieldById);
+    app.get("/api/assignment/form/:formId/field", getFieldsForForm);
+    app.get("/api/assignment/form/:formId/field/:fieldId", getFieldForForm);
+    app.delete("/api/assignment/form/formId/field/:fieldId", deleteFieldForForm);
     // why do I need to use guid or node-uuid libraries?
-    app.post("/api/assignment/form/:formId/field", createField);
-    app.put("/api/assignment/form/:formId/:fieldId", updateFieldById);
+    app.post("/api/assignment/form/:formId/field", createFieldForForm);
+    app.put("/api/assignment/form/:formId/:fieldId", updateField);
 
-    function findFormField(req, res) {
+    function getFieldsForForm(req, res) {
          // req.formId vs req.params.formId?
         var formId = req.params.formId;
         var fields = [];
-        fields = formModel.findFormField(formId);
+        fields = formModel.getFieldsForForm(formId);
         res.json(fields);
     }
 
-    function findFieldById(req, res) {
+    function getFieldForForm(req, res) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
-        res.json(formModel.findFieldById(formId, fieldId));
+        res.json(formModel.getFieldForForm(formId, fieldId));
     }
 
-    function deleteFieldById(req, res) {
+    function deleteFieldForForm(req, res) {
         var formId = req.params.formId;
         var fieldId = req.params.feildId;
         // assignment does not ask to return the updated fields?
         // do we not need to update it in the client?
         //res.json(formModel.deleteFieldById(formId, fieldId));
         // simply deleting the form for now.
-        formModel.deleteFieldById(formId, fieldId);
+        formModel.deleteFieldForForm(formId, fieldId);
     }
 
-    function createField(req, res) {
+    function createFieldForForm(req, res) {
         var formId = req.params.formId;
         var newField = req.body;
         // should I do this is the model?
@@ -38,16 +38,16 @@ module.exports = function (app, formModel) {
         newField._id = (new Date).getTime();
         // assignment asks nothing to return? Does it not need to update in the view?
         //res.json(formModel.createField(formId, field));
-        formModel.createField(formId, newField);
+        formModel.createFieldForForm(formId, newField);
     }
 
-    function updateFieldById(req, res) {
+    function updateField(req, res) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
         var updatedField = req.body;
         // do I return nothing from here? 
         //res.json(formModel.updateFieldById(formId, fieldId, updatedField));
-        formModel.updateFieldById(formId, fieldId, updatedField);
+        formModel.updateField(formId, fieldId, updatedField);
     }
 
 

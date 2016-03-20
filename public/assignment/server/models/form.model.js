@@ -118,7 +118,7 @@ module.exports = function(app) {
             console.log("mock.id: "+mock[i].userId);
         }*/
 
-    function findFormField(formId) {
+    function getFieldsForForm(formId) {
         var fields = [];
         for (var i in mock){
             if(mock[i]._id === formId){
@@ -129,7 +129,7 @@ module.exports = function(app) {
 
     }
 
-    function findFieldById(formId, fieldId) {
+    function getFieldForForm(formId, fieldId) {
         var field;
         var form = findFormById(formId);
 
@@ -146,7 +146,7 @@ module.exports = function(app) {
         return null;
     }
 
-    function deleteFieldById(formId, fieldId) {
+    function deleteFieldForForm(formId, fieldId) {
         var form = findFormById(formId);
         for( var i in form){
             if(form.fields[i]._id === fieldId){
@@ -157,7 +157,7 @@ module.exports = function(app) {
         }
     }
 
-    function createField(formId, newField) {
+    function createFieldForForm(formId, newField) {
         var form = findFormById(formId);
         newField._id = (new Date).getTime();
         form.fields.push(newField);
@@ -165,7 +165,7 @@ module.exports = function(app) {
         // do I need to return this or not!?
     }
 
-    function updateFieldById(formId, fieldId, updatedField) {
+    function updateField(formId, fieldId, updatedField) {
         var form = findFormById(formId);
         for(var i in form.fields){
             if(form.fields[i]._id === formId){
