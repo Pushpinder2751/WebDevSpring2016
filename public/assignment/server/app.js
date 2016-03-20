@@ -11,4 +11,4 @@ module.exports = function(app){
     // should I be creating new fieldModel for this? 
     var fieldService = require("./services/field.service.server")(app, formModel);
     
-}
+};
