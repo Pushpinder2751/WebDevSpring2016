@@ -19,11 +19,11 @@ module.exports = function(app) {
         checkExistingForm: checkExistingForm,
 
         // functions for field.service.server.js
-        findFormField: findFormField,
-        findFieldById: findFieldById,
-        deleteFieldById: deleteFieldById,
-        createField: createField,
-        updateFieldById: updateFieldById
+        getFieldsForForm: getFieldsForForm,
+        getFieldForForm: getFieldForForm,
+        deleteFieldForForm: deleteFieldForForm,
+        createFieldForForm: createFieldForForm,
+        updateField: updateField
 
     };
     return api;
