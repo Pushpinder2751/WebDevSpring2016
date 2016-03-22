@@ -12,9 +12,10 @@
             // singular
             getFieldForForm: getFieldForForm,
             deleteFieldForForm: deleteFieldForForm,
-            updateField: updateField
+            updateField: updateField,
 
             // implement more if necessary
+            getMyForm: getMyForm
 
 
         };
@@ -46,6 +47,10 @@
         function updateField(formId, fieldId) {
 
             return $http.put("/api/assignment/form/"+formId+"/field/"+fieldId, field);
+        }
+
+        function getMyForm(formId){
+            return $http.get("/api/assignment/form/"+ formId);
         }
 
 

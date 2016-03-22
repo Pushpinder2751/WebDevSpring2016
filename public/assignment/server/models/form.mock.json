@@ -18,8 +18,29 @@
         "fields": [
           {"_id": "777", "label": "Title", "type": "TEXT", "placeholder": "Title"},
           {"_id": "888", "label": "Description", "type": "TEXTAREA", "placeholder": "Title"},
-          {"_id": "999", "label": "Due Date", "type": "DATE"}
+          {"_id": "999", "label": "Due Date", "type": "DATE"},
+          {"_id": "444", "label": "State", "type": "OPTIONS", "options": [
+            {"label": "Massachussetts", "value": "MA"},
+            {
+              "label": "New Hampshire",
+              "value": "NH"
+            }]},
+          {"_id" : "2222", "label" : "Hobies", "type": "CHECKBOXES" ,"options" : [
+            {"label" : "BasketBall", "value": "BB"},
+            {"label" : "Chess", "value" : "CC"}
+          ]
+
+          },
+
+          {"_id": 333, "label": "Gender", "type": "RADIOS", "options": [
+            {"label": "Male", "value": "Male"},
+            {"label": "Female", "value": "Female"},
+            {"label": "Do not wish to answer", "value": "Do not wish to answer"}
+
+
         ]
       }
     ]
+      }
+]
 

@@ -51,9 +51,9 @@ module.exports = function(app) {
     }
 
     function findFormById (formId) {
-        fomrId = parseInt(fomrId);
+        console.log("formId :"+formId);
         for(var i in mock){
-            if(mock[i].id === formId){
+            if(mock[i]._id == formId){
                 return mock[i];
             }
         }
@@ -148,11 +148,13 @@ module.exports = function(app) {
 
     function deleteFieldForForm(formId, fieldId) {
         var form = findFormById(formId);
-        for( var i in form){
-            if(form.fields[i]._id === fieldId){
+        console.log("form is: "+form.title);
+        console.log("fieldId is: "+fieldId);
+        for( var i in form.fields){
+            if(form.fields[i]._id == fieldId){
                 // might need to update this
                 form.fields.splice(i, 1);
-                return;
+                return form.fields;
             }
         }
     }
@@ -161,7 +163,7 @@ module.exports = function(app) {
         var form = findFormById(formId);
         newField._id = (new Date).getTime();
         form.fields.push(newField);
-
+        return form.fields;
         // do I need to return this or not!?
     }
 
@@ -171,7 +173,7 @@ module.exports = function(app) {
             if(form.fields[i]._id === formId){
                 form.fields[i] = updatedField;
                 // does this need to return something!?
-                return;
+                return form.fields;
             }
         }
     }
@@ -202,4 +204,6 @@ module.exports = function(app) {
             return "1";
         }
     }
+
+
 };

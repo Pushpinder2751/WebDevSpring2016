@@ -1,10 +1,11 @@
 module.exports = function (app, formModel) {
     app.get("/api/assignment/form/:formId/field", getFieldsForForm);
     app.get("/api/assignment/form/:formId/field/:fieldId", getFieldForForm);
-    app.delete("/api/assignment/form/formId/field/:fieldId", deleteFieldForForm);
+    app.delete("/api/assignment/form/:formId/field/:fieldId", deleteFieldForForm);
     // why do I need to use guid or node-uuid libraries?
     app.post("/api/assignment/form/:formId/field", createFieldForForm);
     app.put("/api/assignment/form/:formId/:fieldId", updateField);
+    app.get("/api/assignment/form/:formId", getMyForm);
 
     function getFieldsForForm(req, res) {
          // req.formId vs req.params.formId?
@@ -22,12 +23,13 @@ module.exports = function (app, formModel) {
 
     function deleteFieldForForm(req, res) {
         var formId = req.params.formId;
-        var fieldId = req.params.feildId;
+        var fieldId = req.params.fieldId;
+        //console.log(" fieldId in service :")
         // assignment does not ask to return the updated fields?
         // do we not need to update it in the client?
-        //res.json(formModel.deleteFieldById(formId, fieldId));
+        res.json(formModel.deleteFieldForForm(formId, fieldId));
         // simply deleting the form for now.
-        formModel.deleteFieldForForm(formId, fieldId);
+        //formModel.deleteFieldForForm(formId, fieldId);
     }
 
     function createFieldForForm(req, res) {
@@ -48,6 +50,11 @@ module.exports = function (app, formModel) {
         // do I return nothing from here? 
         //res.json(formModel.updateFieldById(formId, fieldId, updatedField));
         formModel.updateField(formId, fieldId, updatedField);
+    }
+
+    function getMyForm(req, res){
+        var form = formModel.findFormById(req.params.formId);
+        res.send(form);
     }
 
 

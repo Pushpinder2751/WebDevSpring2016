@@ -14,31 +14,43 @@
                 //})
                 .when("/home",{
                     templateUrl: "views/home/home.view.html",
-                    controller: "HeaderController"
+                    controller: "HeaderController",
+                    controllerAs:"model"
                 })
                 .when("/register", {
                     templateUrl: "views/users/register.view.html",
-                    controller: "RegisterController"
+                    controller: "RegisterController",
+                    controllerAs:"model"
                 })
                 .when("/login", {
                     templateUrl: "views/users/login.view.html",
-                    controller: "LoginController"
+                    controller: "LoginController",
+                    controllerAs:"model"
                 })
                 .when("/profile", {
                     templateUrl: "views/users/profile.view.html",
-                    controller: "ProfileController"
+                    controller: "ProfileController",
+                    controllerAs:"model"
                 })
                 .when("/admin", {
                     templateUrl: "views/users/admin.view.html",
-                    controller: "AdminController"
+                    controller: "AdminController",
+                    controllerAs:"model"
                 })
                 .when("/forms", {
                     templateUrl: "views/forms/forms.view.html",
-                    controller: "FormController"
+                    controller: "FormController",
+                    controllerAs:"model"
                 })
                 .when("/fields",{
                     templateUrl: "views/fields/form-fields.view.html",
-                    controller: "FieldsController"
+                    controller: "FieldsController",
+                    controllerAs:"model"
+                })
+                .when("/form/:formId/fields",{
+                    templateUrl: "views/fields/form-fields.view.html",
+                    controller: "FieldsController as model",
+                    controllerAs:"model"
                 })
                 .otherwise({
                     redirectTo: "/home"

@@ -5,111 +5,155 @@
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-            <h1>Forms : Registratin Forms</h1>
+            <h1>Form : {{model.currentForm.title}}</h1>
             <ul class = "nav nav-tabs">
-                <li><a href="#/forms">Forms</a></li>
-                <li class="active"><a href="#/fields">Fields</a></li>
+                <li role="presentation"><a href="#/forms">Forms</a></li>
+                <li role="presentation" class="active"><a href="#/form/{{field._id}}/fields">Fields</a></li>
             </ul>
-            <form class = "form-horizontal form_style">
-                <div class="form-group ">
-                    <label for="First Name" class="col-sm-2 control-label ">First Name :</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="First Name" placeholder="First Name">
+            <form class = "form-horizontal form_style" ng-model="model.fields">
 
 
-                    </div>
-                    <span class="glyphicon glyphicon-align-justify pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true" ></span>
+                <div class="form-group " ng-switch="field.type" ng-repeat="field in model.fields">
+                    <div ng-switch-when="TEXT" class="form-group">
+                        <label>{{field.label}}</label>
+                        <br/>
+                        <div class="col-xs-8 ">
+                            <input type="text" placeholder="{{field.placeholder}}" class="form-control ">
+                        </div>
 
-                </div>
-
-                <div class="form-group ">
-                    <label for="Last Name" class="col-sm-2 control-label ">Last Name :</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="Last Name" placeholder="Last Name">
-
-
-                    </div>
-                    <span class="glyphicon glyphicon-align-justify pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true" ></span>
-
-                </div>
-
-                <div class="form-group">
-                    <label for="Date of Birth" class="col-sm-2 control-label ">Date of Birth :</label>
-                    <div class="col-sm-4">
-                        <input type="date" class="form-control" id="Date of Birth" placeholder="Select Date">
-
+                        <div class="col-sm-4" align="right">
+                    <span class="glyphicon glyphicon-pencil btn btn-primary"
+                          ng-click="model.editField(field)"
+                          data-toggle="modal" data-target="#editField"></span>
+                            <span class="glyphicon glyphicon-plus btn btn-warning"></span>
+                    <span class="glyphicon glyphicon-remove  btn btn-danger"
+                          ng-click="model.removeField(field)"></span>
+                            <span class="glyphicon glyphicon-menu-hamburger btn btn-success"></span>
+                        </div>
 
                     </div>
-                    <span class="glyphicon glyphicon-align-justify pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true" ></span>
 
-                </div>
+                    <div ng-switch-when="TEXTAREA" class="form-group">
+                        <label>{{field.label}}</label>
+                        <br/>
+                        <div class="col-xs-8 ">
+                            <textarea placeholder="{{field.placeholder}}" class="form-control "></textarea>
+                        </div>
 
-                <div class="form-group">
-                    <label for="Gender" class="col-sm-2 control-label ">Gender :</label>
-                    <div class="col-sm-4">
-                        <select>
-                            <option value="Male">Male </option>
-                            <option value="Female">Female </option>
-                        </select>
-
-                    </div>
-                    <span class="glyphicon glyphicon-align-justify pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true" ></span>
-
-                </div>
-
-                <div class="form-group">
-                    <label for="Roles" class="col-sm-2 control-label ">Roles :</label>
-                    <div class="col-sm-4 checkbox">
-                        <label><input type="checkbox" value="">Admin</label>
-                        <label><input type="checkbox" value="">Student</label>
-                        <label><input type="checkbox" value="">Users</label>
+                        <div class="col-sm-4" align="right">
+                    <span class="glyphicon glyphicon-pencil btn btn-primary"
+                          ng-click="model.editField(field)"
+                          data-toggle="modal" data-target="#editField"></span>
+                            <span class="glyphicon glyphicon-plus btn btn-warning"></span>
+                    <span class="glyphicon glyphicon-remove  btn btn-danger"
+                          ng-click="model.removeField(field)"></span>
+                            <span class="glyphicon glyphicon-menu-hamburger btn btn-success"></span>
+                        </div>
 
                     </div>
-                    <span class="glyphicon glyphicon-align-justify pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true" ></span>
 
-                </div>
+                    <div ng-switch-when="DATE" class="form-group">
+                        <label>{{field.label}}</label>
+                        <br/>
+                        <div class="col-xs-8 ">
+                            <input type="date" placeholder="{{field.placeholder}}" class="form-control ">
+                        </div>
 
-
-                <div class="form-group">
-                    <label for="Roles" class="col-sm-2 control-label ">Liscene Agreement :</label>
-                    <div class="col-sm-4 radio">
-                        <label><input type="radio" name="optradio">Yes</label>
-                        <label><input type="radio" name="optradio">No</label>
+                        <div class="col-sm-4" align="right">
+                    <span class="glyphicon glyphicon-pencil btn btn-primary"
+                          ng-click="model.editField(field)"
+                          data-toggle="modal" data-target="#editField"></span>
+                            <span class="glyphicon glyphicon-plus btn btn-warning"></span>
+                    <span class="glyphicon glyphicon-remove  btn btn-danger"
+                          ng-click="model.removeField(field)"></span>
+                            <span class="glyphicon glyphicon-menu-hamburger btn btn-success"></span>
+                        </div>
 
                     </div>
-                    <span class="glyphicon glyphicon-align-justify pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true" ></span>
-                    <span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true" ></span>
+
+                    <div ng-switch-when="OPTIONS" class="form-group">
+                        <label>{{field.label}}</label>
+                        <br/>
+                        <div class="col-xs-8 ">
+                            <select class="col-sm-6 form-control">
+                                <option ng-repeat="option in field.options">{{option.label}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-4" align="right">
+                    <span class="glyphicon glyphicon-pencil btn btn-primary"
+                          ng-click="model.editField(field)"
+                          data-toggle="modal" data-target="#editField"></span>
+                            <span class="glyphicon glyphicon-plus btn btn-warning"></span>
+                    <span class="glyphicon glyphicon-remove  btn btn-danger"
+                          ng-click="model.removeField(field)"></span>
+                            <span class="glyphicon glyphicon-menu-hamburger btn btn-success"></span>
+                        </div>
+
+                    </div>
+
+                    <div ng-switch-when="CHECKBOXES" class="form-group">
+                        <label>{{field.label}}</label>
+                        <br/>
+                        <div class="col-xs-8 checkbox-group">
+                            <div ng-repeat="checkbox in field.options">
+                                <input type="checkbox" value="{{checkbox.value}}">
+                                {{checkbox.label}}
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4" align="right">
+                    <span class="glyphicon glyphicon-pencil btn btn-primary"
+                          ng-click="model.editField(field)"
+                          data-toggle="modal" data-target="#editField"></span>
+                            <span class="glyphicon glyphicon-plus btn btn-warning"></span>
+                    <span class="glyphicon glyphicon-remove  btn btn-danger"
+                          ng-click="model.removeField(field)"></span>
+                            <span class="glyphicon glyphicon-menu-hamburger btn btn-success"></span>
+                        </div>
+
+                    </div>
+
+                    <div ng-switch-when="RADIOS " class="form-group">
+                        <label>{{field.label}}</label>
+                        <br/>
+                        <div class="col-xs-8 radio-group">
+                            <div ng-repeat="radio in field.options">
+                                <input type="radio" >{{radio.label}}<br/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4" align="right">
+                    <span class="glyphicon glyphicon-pencil btn btn-primary"
+                          ng-click="model.editField(field)"
+                          data-toggle="modal" data-target="#editField"></span>
+                            <span class="glyphicon glyphicon-plus btn btn-warning"></span>
+                    <span class="glyphicon glyphicon-remove  btn btn-danger"
+                          ng-click="model.removeField(field)"></span>
+                            <span class="glyphicon glyphicon-menu-hamburger btn btn-success"></span>
+                        </div>
+
+                    </div>
+
+
+
+
 
                 </div>
 
+                <hr>
 
-            <hr>
 
-                <label class="col-sm-2 control-label ">Add New Field:</label>
-                <div class="col-sm-4">
-                    <select>
-                        <option value="Singhle Line Text">Single Line Text </option>
 
-                    </select>
 
-                </div>
+
+
+
+
+
+
+
+
 
             </form>
         </div>
