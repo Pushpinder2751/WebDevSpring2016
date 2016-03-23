@@ -25,7 +25,7 @@
         // "cleverly" same name to the functions as api
 
         function createFieldForForm(formId, field) {
-            return $http.post("/api/assignment/form"+formId+"/field", field);
+            return $http.post("/api/assignment/form/"+formId+"/field", field);
         }
 
         // the plural
@@ -44,7 +44,7 @@
             return $http.delete("/api/assignment/form/"+formId+"/field/"+fieldId);
         }
         
-        function updateField(formId, fieldId) {
+        function updateField(formId, fieldId, field) {
 
             return $http.put("/api/assignment/form/"+formId+"/field/"+fieldId, field);
         }

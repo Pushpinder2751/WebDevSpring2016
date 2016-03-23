@@ -161,7 +161,7 @@ module.exports = function(app) {
 
     function createFieldForForm(formId, newField) {
         var form = findFormById(formId);
-        newField._id = (new Date).getTime();
+        //newField._id = (new Date).getTime();
         form.fields.push(newField);
         return form.fields;
         // do I need to return this or not!?
@@ -170,7 +170,8 @@ module.exports = function(app) {
     function updateField(formId, fieldId, updatedField) {
         var form = findFormById(formId);
         for(var i in form.fields){
-            if(form.fields[i]._id === formId){
+            if(form.fields[i]._id == fieldId){
+                console.log("field match");
                 form.fields[i] = updatedField;
                 // does this need to return something!?
                 return form.fields;

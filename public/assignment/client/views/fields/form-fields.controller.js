@@ -91,8 +91,8 @@
                         .getFieldsForForm(formId)
                         .then(function (response) {
                             vm.fields = response.data;
-                            console.log("field "+vm.fields);
-
+                            console.log("field ");
+                            console.log(vm.fields);
                         });
                 });
             
@@ -101,16 +101,20 @@
 
         function addField(fieldType) {
             var newFieldTemplate = findTemplateForFieldType(fieldType);
+            console.log("newFieldTemplate: "+newFieldTemplate);
             FieldService
                 .createFieldForForm(vm.currentForm._id, newFieldTemplate)
                 .then(function (response) {
+                    console.log(" response :"+response.data);
                     vm.fields = response.data;
                 })
         }
         
         function findTemplateForFieldType(fieldType) {
+            //console.log("fieldType "+fieldType);
             for(var index in fieldTypes){
                 if(fieldTypes[index].fieldOption === fieldType){
+                    //console.log("match");
                     return fieldTypes[index].template;
                 }
             }
@@ -126,7 +130,8 @@
 
         function editField(field) {
             vm.field = field;
-
+            console.log("edit field : ");
+            console.log(field);
             if(vm.field.type == "OPTIONS"
                 || vm.field.type == "CHECKBOXES"
                 || vm.field.type == "RADIOS"){
@@ -137,22 +142,35 @@
                 for (var index in opts) {
                     editedOptions.push(opts[index].label + ":" + opts[index].value);
                 }
-                vm.newOptions = editedOptions.join("\n");
+                console.log("edited Options");
+                console.log(editedOptions);
+               // vm.newOptions = editedOptions.join("\n");
+                vm.newOptions = editedOptions;
                 console.log("vm.newOptions is");
                 console.log(vm.newOptions);
+                //vm.field.options = vm.newOptions;
 
             }
         }
 
         function updateField(field) {
             vm.field = field;
-
+            console.log("Updatefield : ");
+            console.log(field);
+            console.log("newOptions :");
+            console.log(vm.newOptions);
             if (vm.field.type == "OPTIONS"
                 || vm.field.type == "CHECKBOXES"
                 || vm.field.type == "RADIOS") {
+                console.log("I am here");
+                console.log(field.options);
                 var newOptions=[];
                 var enteredOptions = vm.newOptions;
+
                 for(var index in enteredOptions){
+
+
+
                     newOptions.push
                     ({
                         "label": enteredOptions[index].split(":")[0],
@@ -160,12 +178,15 @@
                     });
                 }
                 vm.field.options = newOptions;
+                console.log("updated Field options: ");
+                console.log(vm.field.options);
             }
-            
             FieldService
                 .updateField(vm.currentForm._id, vm.field._id, vm.field)
                 .then(function (response) {
                     vm.fields = response.data;
+                    console.log("updated fields ");
+                    console.log(vm.fields);
                 })
         }
     }

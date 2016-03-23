@@ -6,6 +6,7 @@ module.exports = function(app, userModel){
     app.get("/api/assignment/user/:userId", findUserById);
     app.put("/api/assignment/user/:userId", updateUser);
     app.delete("/api/assignment/user/:userId", deleteUser);
+    app.get("/api/assignment/user/loggedin", loggedin);
 
     //user service specific requirements
     // might need to update this
@@ -87,7 +88,15 @@ module.exports = function(app, userModel){
             password: req.query.password
         }
         //console.log("credentials "+credentials);
-        res.json(userModel.findUserByCredentials(credentials));
+        var user = userModel.findUserByCredentials(credentials);
+       // req.session.currentUser = user;
+
+        res.json(user);
+    }
+
+    // to be used later , remove the comment when you start using this.
+    function loggedin(req, res) {
+        res.json(req.session.currentUser);
     }
 
 
