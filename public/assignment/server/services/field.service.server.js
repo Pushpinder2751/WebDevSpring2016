@@ -8,6 +8,9 @@ module.exports = function (app, formModel) {
 
     app.get("/api/assignment/form/:formId", getMyForm);
 
+    app.put("/api/assignment/form/:formId/fields1/", updateSorting);
+    ///api/assignment/form/"+formId+"/fields", fields
+
     function getFieldsForForm(req, res) {
          // req.formId vs req.params.formId?
         var formId = req.params.formId;
@@ -50,7 +53,7 @@ module.exports = function (app, formModel) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
         var updatedField = req.body;
-         
+
 
         res.json(formModel.updateField(formId, fieldId, updatedField));
     }
@@ -58,6 +61,14 @@ module.exports = function (app, formModel) {
     function getMyForm(req, res){
         var form = formModel.findFormById(req.params.formId);
         res.send(form);
+    }
+
+    function updateSorting(req, res) {
+        var formId = req.params.formId;
+        var fields1 = req.body;
+        console.log("field.server");
+        console.log(fields1);
+        res.json(formModel.updateSorting(formId, fields1));
     }
 
 

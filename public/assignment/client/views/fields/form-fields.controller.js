@@ -5,6 +5,10 @@
         .controller("FieldsController", FieldsController)
 
     function FieldsController( $rootScope, $routeParams, FormService, FieldService ){
+
+
+
+
         console.log("Hello from FeildsController");
         // this is instead of $Scope
         var vm = this;
@@ -13,6 +17,7 @@
         vm.removeField = removeField;
         vm.editField = editField;
         vm.updateField = updateField;
+        vm.check = check;
 
         var formId;
 
@@ -188,6 +193,20 @@
                     console.log("updated fields ");
                     console.log(vm.fields);
                 })
+        }
+
+        function check(fields1){
+            //console.log("Fields Incoming: ");
+            console.log( fields1);
+            //vm.fields = fields1;
+            console.log("formIDDJFDKJF: "+formId);
+            FieldService
+                .updateSorting(vm.currentForm._id, fields1)
+                .then(function (response) {
+                    console.log("I am back");
+                    console.log(response.data);
+                })
+            // will see then later if needed
         }
     }
 })();

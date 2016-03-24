@@ -10,7 +10,7 @@
                 <li role="presentation"><a href="#/forms">Forms</a></li>
                 <li role="presentation" class="active"><a href="#/form/{{field._id}}/fields">Fields</a></li>
             </ul>
-            <form class = "form-horizontal form_style" ng-model="model.fields">
+            <form class = "form-horizontal form_style" ng-model="model.fields" ui-sortable="model.fields">
 
 
                 <div class="form-group " ng-switch="field.type" ng-repeat="field in model.fields">
@@ -28,7 +28,7 @@
                             <span class="glyphicon glyphicon-plus btn btn-warning"></span>
                     <span class="glyphicon glyphicon-remove  btn btn-danger"
                           ng-click="model.removeField(field)"></span>
-                            <span class="glyphicon glyphicon-menu-hamburger btn btn-success"></span>
+                            <span class="glyphicon glyphicon-menu-hamburger btn btn-success" ng-mouseup="model.check(model.fields)"></span>
                         </div>
 
                     </div>

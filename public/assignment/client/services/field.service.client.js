@@ -15,7 +15,8 @@
             updateField: updateField,
 
             // implement more if necessary
-            getMyForm: getMyForm
+            getMyForm: getMyForm,
+            updateSorting: updateSorting
 
 
         };
@@ -51,6 +52,12 @@
 
         function getMyForm(formId){
             return $http.get("/api/assignment/form/"+ formId);
+        }
+
+        function updateSorting(formId, fields1) {
+            console.log("Interemedieate");
+            console.log(fields1);
+            return $http.put("/api/assignment/form/"+formId+"/fields1/", fields1);
         }
 
 

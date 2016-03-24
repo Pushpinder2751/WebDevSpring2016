@@ -23,7 +23,9 @@ module.exports = function(app) {
         getFieldForForm: getFieldForForm,
         deleteFieldForForm: deleteFieldForForm,
         createFieldForForm: createFieldForForm,
-        updateField: updateField
+        updateField: updateField,
+
+        updateSorting: updateSorting
 
     };
     return api;
@@ -204,6 +206,13 @@ module.exports = function(app) {
             console.log("Form already exists!");
             return "1";
         }
+    }
+    
+    function updateSorting(formId, fields1) {
+        console.log(fields1);
+        var form = findFormById(formId);
+        form.fields = fields1;
+        return form.fields;
     }
 
 
