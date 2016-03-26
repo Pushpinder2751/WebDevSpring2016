@@ -1,0 +1,46 @@
+
+
+
+
+<div class="container-fluid">
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+            <h1>Things </h1>
+            <ul class = "nav nav-tabs">
+                <li class="active"><a href="#/thing">Thing</a></li>
+                <li><a>Fields</a></li>
+            </ul>
+                <table class="table table-striped table table-bordered table-responsive">
+                    <thead>
+                        <tr class="theadrow">
+                            <th><span class="caret"></span>Things Tracked : </th>
+                            <th class="th-action">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <input ng-model="form.title" type="text" class="form-control" id="Name" placeholder="Name" required>
+                        </td>
+
+                        <td>
+                            <a ng-hide="hideplus" ng-click="addForm(form)"><span class="glyphicon glyphicon-plus pull-left" aria-hidden="true" ></span></a>
+                            <a ng-click="updateForm(form)"><span class="glyphicon glyphicon-ok pull-right" ></span></a>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="form in forms" ng-class="{'selected-form': $index == selected}">
+                        <td>
+                            <a href="#/form/{{form._id}}/fields">{{form.title}}</a>
+                        </td>
+                        <td>
+                            <a ng-click="deleteForm(form._id)"><span class="glyphicon glyphicon-remove pull-left" area-hidden="true"></span></a>
+                            <a ng-click="selectForm($index)"><span class="glyphicon glyphicon-pencil  pull-right"></span></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
+
+    </div>
+

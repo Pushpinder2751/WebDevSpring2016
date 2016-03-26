@@ -1,0 +1,15 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li ng-class="{'active' : $location.url().indexOf('home') != -1}"><a href="#/home">Home <span class="sr-only">(current)</span></a></li>
+                <li ng-show="currentUser" ng-class="{'active' : $location.url().indexOf('profile') != -1}"><a href="#/profile">Profile</a></li>
+                <li ng-show="currentUser && currentUser.roles.indexOf('admin') >= 0" ng-class="{'active' : $location.url().indexOf('admin') != -1}"><a href="#/admin">Admin</a></li>
+                <li ng-show="currentUser" ng-class="{'active' : ($location.url().indexOf('things')  || $location.url().indexOf('fields')) != -1}"><a href="#/thing">Things</a></li>
+            </ul>
+
+        </div>
+
+    </div>
+</div>
