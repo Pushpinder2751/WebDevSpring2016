@@ -12,18 +12,29 @@
         console.log("Hello from RegisterController!");
         $scope.register = register;
 
-        function register(user){
-            console.log(user);
+        function register(currentUser){
+            console.log(currentUser);
             console.log("I am in register function");
-            UserService.createUser(user,gotoProfile);
+            UserService
+                .createUser(currentUser)
+                .then(function (response) {
+                    console.log(response.data);
+                    UserService
+                        .setCurrentUser(response.data);
+
+                            $location.url("/profile");
+
+
+                })
+
         }
 
-        function gotoProfile(user){
+       /* function gotoProfile(user){
             console.log(user);
             if(user){
-               $rootScope.user = user;
+               $rootScope.currentUser = user;
                 $location.url("/profile");
             }
-        }
+        }*/
     }
 })();

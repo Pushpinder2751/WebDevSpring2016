@@ -7,7 +7,7 @@
     function FormService($http){
 
         // no more data in the client
-        /*var forms = [
+        /*var things = [
             {"_id": "000", "title": "Contacts", "userId": 123},
             {"_id": "010", "title": "ToDo",     "userId": 123},
             {"_id": "020", "title": "CDs",      "userId": 234}
@@ -36,6 +36,8 @@
         }
 
         function updateFormById(formId, newForm){
+            //console.log("HHHHHHH");
+            //console.log(newForm);
             return $http.put("/api/assignment/form/"+formId, newForm);
         }
 

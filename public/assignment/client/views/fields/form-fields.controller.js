@@ -198,14 +198,22 @@
         function check(fields1){
             //console.log("Fields Incoming: ");
             console.log( fields1);
+            vm.currentForm.fields = fields1;
             //vm.fields = fields1;
-            console.log("formIDDJFDKJF: "+formId);
-            FieldService
+            console.log("formIDDJFDKJF");
+            console.log(vm.currentForm);
+            FormService
+                .updateFormById(vm.currentForm._id, vm.currentForm)
+                .then(function (response) {
+                    console.log("abcjfalkdsjf;a");
+                    console.log(response.data);
+                })
+            /*FieldService
                 .updateSorting(vm.currentForm._id, fields1)
                 .then(function (response) {
                     console.log("I am back");
                     console.log(response.data);
-                })
+                })*/
             // will see then later if needed
         }
     }

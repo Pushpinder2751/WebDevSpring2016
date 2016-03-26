@@ -9,12 +9,12 @@
         function FormController($scope, $location, $rootScope, FormService){
             console.log("Hello from FormController");
             var userId = -1;
-            if(!$rootScope.user){
+            if(!$rootScope.currentUser){
                 console.log("No user yet!");
                 $location.path("/login");
                 return;
             }else{
-                userId = $rootScope.user._id;
+                userId = $rootScope.currentUser._id;
                 formsForCurrentUser();
             }
 
@@ -24,7 +24,7 @@
             $scope.selectForm = selectForm;
             $scope.selected = -1; // initially
 
-            // gets all the forms associated with the user in current scope and then to ng-repeat
+            // gets all the things associated with the user in current scope and then to ng-repeat
             function formsForCurrentUser(){
                // console.log("abc");
                 FormService
@@ -34,7 +34,7 @@
                         $scope.forms = response.data;
                     });
                 /*{
-                    $scope.forms = formsByUserId;
+                    $scope.things = formsByUserId;
                 })*/
             }
 

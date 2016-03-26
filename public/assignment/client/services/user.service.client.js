@@ -31,9 +31,32 @@
             createUser: createUser,
             updateUser: updateUser,
             findAllUsers: findAllUsers,
-            deleteUserById:deleteUserById
+            deleteUserById:deleteUserById,
+
+            // new ones
+            setCurrentUser: setCurrentUser,
+            getCurrentUser: getCurrentUser,
+            logout: logout
         }
         return api;
+
+        function logout() {
+            console.log("logging out!");
+            return $http.post("/api/assignment/logout");
+        }
+
+        function getCurrentUser() {
+            // old implementation
+            //return $rootScope.currentUser;
+            // new implementation
+            return $http.get("/api/assignment/loggedin");
+        }
+
+        function setCurrentUser(user) {
+            $rootScope.currentUser = user;
+            console.log("current user :");
+            console.log($rootScope.currentUser);
+        }
 
         function findUserByUsername(username) {
             // not sure if this is the right way

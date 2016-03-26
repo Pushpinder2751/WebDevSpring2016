@@ -8,7 +8,7 @@
         .module("FormBuilderApp")
         .controller("HeaderController", HeaderController)
 
-        function HeaderController($scope, $location, $rootScope){
+        function HeaderController($scope, $location, $rootScope, UserService){
             console.log("HeaderController");
 
             $scope.isLoggedIn = isLoggedIn;
@@ -20,8 +20,13 @@
             }
 
             function logout(user){
-                delete $rootScope.user;
-                $location.url("/");
+                delete $rootScope.currentUser;
+                UserService
+                    .logout(user)
+                    .then(function (response) {
+                        $location.url("/");
+                    });
+
             }
 
         }

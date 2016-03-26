@@ -3,20 +3,24 @@ var app = express();
 
 var bodyParser = require('body-parser');
 var multer = require('multer');
-//var cookieParser = require('cookie-parser');
-//var session = require('express-session');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 // where to fetch the static content
 // __dirname = directory name
 // '/public' from public direcory
 
-//console.log("secret");
-//console.log(process.env.PASSPORT_SECRET);
+console.log("secret");
+console.log(process.env.PASSPORT_SECRET);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
-//app.use(session({ secret: "random string for testing" }));
-//app.use(cookieParser());
+
+// what do I have to do in openshift for this??
+// search setting environment  custom variables for openshift
+// ask professor about the error below.
+app.use(session({ secret: process.env.PASSPORT_SECRET }));
+app.use(cookieParser());
 
 app.use(express.static(__dirname + '/public'));
 

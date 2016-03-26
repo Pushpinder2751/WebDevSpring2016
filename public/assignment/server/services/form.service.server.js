@@ -10,7 +10,7 @@ module.exports = function(app, formModel){
 
     function findAllFormsForUser(req, res){
         // not sure if params is to be used here
-        //console.log("I reach forms in server");
+        //console.log("I reach things in server");
         var userId = req.params.userId;
         //console.log(userId);
         res.json(formModel.findAllFormsForUser(userId));

@@ -9,14 +9,16 @@
         .controller("ProfileController", ProfileController);
 
     function ProfileController($rootScope,$scope,$location, UserService) {
-        if(!$rootScope.user){
+        
+        // how is the $q promise better than this? 
+        if(!$rootScope.currentUser){
             console.log("No user yet!");
             $location.path("/login");
             return;
         }
         console.log("In Profile Controller");
         $scope.update = update;
-        $scope.user = $rootScope.user;
+        $scope.user = $rootScope.currentUser;
         //retrieve the currently loggedin user from the $rootScope
         console.log($scope.user);
         var userId = $scope.user._id;
@@ -28,7 +30,11 @@
             UserService
                 .updateUser(userId, user)
                 .then(function (response) {
-                    console.log("updated response "+ response.data);
+                    console.log("updated response ");
+                    console.log(response.data);
+                    $scope.user = response.data;
+                    UserService
+                        .setCurrentUser(response.data);
                 });
 
         }

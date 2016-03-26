@@ -22,9 +22,10 @@
                 .then(function (response) {
                     if(response.data){
                         console.log(response.data);
-
-                            // this is done in user.service.client.js by professor. why?
-                            $rootScope.user = response.data;
+                            console.log(response.data);
+                            // old implementation
+                            // $rootScope.user = response.data;
+                            UserService.setCurrentUser(response.data);
                             $location.url("/profile");
 
                     }
@@ -34,6 +35,14 @@
                 });
         }
 
+        function logout() {
+            UserService
+                .logout()
+                .then(function () {
+                    UserService.setCurrentUser(null);
+                    $location.url("/home");
+                });
+        }
         // can I use this funtion up there?
        /* function gotoProfile(response){
             console.log(response);

@@ -74,6 +74,7 @@ module.exports = function(app) {
             if(mock[i]._id == formId){
                 mock[i].title = newForm.title;
                 mock[i].userId = newForm.userId;
+                mock[i].fields = newForm.fields;
                 return mock[i];
             }
         }

@@ -45,8 +45,8 @@
                     controller: "AdminController",
                     controllerAs:"model"
                 })
-                .when("/forms", {
-                    templateUrl: "views/forms/forms.view.html",
+                .when("/thing", {
+                    templateUrl: "views/things/things.view.html",
                     controller: "FormController",
                     controllerAs:"model"
                 })

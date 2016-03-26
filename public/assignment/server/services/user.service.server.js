@@ -6,7 +6,8 @@ module.exports = function(app, userModel){
     app.get("/api/assignment/user/:userId", findUserById);
     app.put("/api/assignment/user/:userId", updateUser);
     app.delete("/api/assignment/user/:userId", deleteUser);
-    app.get("/api/assignment/user/loggedin", loggedin);
+    app.get("/api/assignment/loggedin", loggedin);
+    app.post("/api/assignment/logout", logout);
 
     //user service specific requirements
     // might need to update this
@@ -21,24 +22,37 @@ module.exports = function(app, userModel){
 
 //"cleverly" named same as the model function names
 
+    function logout(req, res) {
+        req.session.destroy();
+        res.send(200);
+    }
+
 
 // post to Create new User
      function createUser (req, res){
-        var newUser = req.body;
-        console.log(newUser);
+         var newUser = req.body;
+         console.log(newUser);
+         
+        // is there a better design for putting user in session ?
+        newUser = userModel.createUser(newUser);
+         req.session.currentUser = newUser;
         // this is pretty cool
-        res.json(userModel.createUser(newUser));
+        res.json(newUser);
      }
 
 
     function reroute(req, res) {
         console.log(req.query.username);
         console.log(req.query.password);
+        console.log("entered reroute");
         if(req.query.username && req.query.password){
             findUserByCredentials(req, res);
         }
         else if(req.query.username){
             findAllUser(req, res);
+        }
+        else if (req.params.userId) {
+            updateUser(req, res);
         }
         else {
             findAllUser(req, res);
@@ -61,9 +75,11 @@ module.exports = function(app, userModel){
 
 // to Update the user
     function updateUser (req, res){
-        var userId = req.param.userId;
+        var userId = req.params.userId;
         // how does this work?
         var user = req.body;
+        //console.log("update");
+        //console.log(user);
         res.json(userModel.updateUser(userId, user));
     }
 
@@ -89,13 +105,15 @@ module.exports = function(app, userModel){
         }
         //console.log("credentials "+credentials);
         var user = userModel.findUserByCredentials(credentials);
-       // req.session.currentUser = user;
+        req.session.currentUser = user;
 
         res.json(user);
     }
 
     // to be used later , remove the comment when you start using this.
     function loggedin(req, res) {
+        console.log("in Logged in function");
+        console.log(req.session.currentUser);
         res.json(req.session.currentUser);
     }
 
