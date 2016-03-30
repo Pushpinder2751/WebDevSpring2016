@@ -113,7 +113,7 @@ module.exports = function(app, userModel){
     // to be used later , remove the comment when you start using this.
     function loggedin(req, res) {
         console.log("in Logged in function");
-        console.log(req.session.currentUser);
+        //console.log(req.session.currentUser);
         res.json(req.session.currentUser);
     }
 

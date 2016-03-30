@@ -5,9 +5,44 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-// where to fetch the static content
-// __dirname = directory name
-// '/public' from public direcory
+
+var mongoose = require('mongoose');
+
+// if it does not find the db, it creates one
+var connectionString = 'mongodb://127.0.0.1:27017/cs5610';
+
+// to use remote connection string
+// if running remete server
+
+/*
+message in openshift
+MongoDB 2.4 database added.  Please make note of these credentials:
+
+    Root User:     admin
+Root Password: ffGre8JL4H5k
+Database Name: webdev2016
+
+Connection URL: mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/*/
+
+if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
+    connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+            process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+            process.env.OPENSHIFT_NODEJS_HOST + ":" +
+            process.env.OPENSHIFT_NODEJS_PORT + "/" +
+            process.env.OPENSHIFT_APP_NAME;
+}
+// connect to the database  
+mongoose.connect(connectionString);
+
+var db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    // we're connected!
+    console.log("we are connected to the database!");
+});
+
+
 
 console.log("secret");
 console.log(process.env.PASSPORT_SECRET);
@@ -21,6 +56,10 @@ app.use(multer());
 // ask professor about the error below.
 app.use(session({ secret: process.env.PASSPORT_SECRET }));
 app.use(cookieParser());
+
+// where to fetch the static content
+// __dirname = directory name
+// '/public' from public direcory
 
 app.use(express.static(__dirname + '/public'));
 
@@ -42,7 +81,7 @@ app.get('/api/users',function(req,res){
     //can also write res.send(users);
     // send automatically detects json
 });
-
-require("./public/assignment/server/app.js")(app);
+// adding db
+require("./public/assignment/server/app.js")(app, db);
 
 app.listen(port, ipaddress);

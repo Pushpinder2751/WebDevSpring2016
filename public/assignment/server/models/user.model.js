@@ -1,7 +1,10 @@
 
 var mock = require("./user.mock.json");
 // where is function(app) used?
-module.exports = function(app){
+module.exports = function(app, db, mongoose){
+
+    // load user schema
+    // var UserSchema = require("./user.schema.server")(mongoose);
 
     var api = {
         // generic data model requirements which all models must follow
