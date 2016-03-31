@@ -1,7 +1,9 @@
-module.exports = function(app){
+// adding db and mongoose here too
+module.exports = function(app, db, mongoose){
     // do I need to use app below?
-    var userModel = require("./models/user.model.js")();
-    var formModel = require("./models/form.model.js")();
+    // I am adding db and mongoose references here , but do I need them in here? why?
+    var userModel = require("./models/user.model.js")(db, mongoose);
+    var formModel = require("./models/form.model.js")(db, mongoose);
     //Do I need to make a field model
     // var fieldModel = require("./models/field.model.js")(formModel);
 

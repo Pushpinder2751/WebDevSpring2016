@@ -1,4 +1,7 @@
 
+
+
+
 module.exports = function(app, userModel){
     // generic web service requirement first
     app.post("/api/assignment/user", createUser);
@@ -29,15 +32,29 @@ module.exports = function(app, userModel){
 
 
 // post to Create new User
+// updated for databases
      function createUser (req, res){
          var newUser = req.body;
          console.log(newUser);
          
         // is there a better design for putting user in session ?
-        newUser = userModel.createUser(newUser);
-         req.session.currentUser = newUser;
-        // this is pretty cool
-        res.json(newUser);
+        newUser = userModel.createUser(newUser)
+            // handle model promise
+            .then(
+                // login user if promise resolved
+                function (doc) {
+                    req.session.currentUser = doc;
+                    console.log("sending back new user data");
+                    console.log(doc)
+                    // this is pretty cool
+                    res.json(newUser);
+                },
+                // send error if promise rejected
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+
      }
 
 
@@ -60,43 +77,99 @@ module.exports = function(app, userModel){
 
     }
 // to find/return all users
+// updated with promise for db.
     function findAllUser (req, res){
         console.log(req.query.username);
-        res.json(userModel.findAllUser());
+       // res.json(userModel.findAllUser());
+        var users = userModel.findAllUser()
+            .then(
+                //return users if promise if resolved
+                function (doc) {
+                    res.json(users);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
     }
 
 //FindUserById: takes an Id and returns corresponding user
 
     function findUserById(req, res){
         var userId = req.params.userId;
-        console.log(userId);
-        res.json(userModel.findUserById(userId));
+        //console.log(userId);
+        //res.json(userModel.findUserById(userId))
+        var user = userModel.findUserById(userId)
+            .then(
+                //return user if promise if resolved
+                function (doc) {
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
 // to Update the user
+// updated with db
     function updateUser (req, res){
         var userId = req.params.userId;
         // how does this work?
         var user = req.body;
         //console.log("update");
         //console.log(user);
-        res.json(userModel.updateUser(userId, user));
+        //res.json(userModel.updateUser(userId, user));
+        var updatedUser = userModel.updateUser(userId, user)
+            .then(
+                function (doc) {
+                    //console.log("sending updated user");
+                    //console.log(doc);
+                    res.json(doc);
+
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
     }
 
 // to Delete a user
+// not tested
     function deleteUser (req, res){
         var userId = req.params.userId;
-        res.json(userModel.deleteUser(userId));
+        //res.json(userModel.deleteUser(userId));
+        userModel.deleteUser(userId)
+            .then(
+                function (doc) {
+                    // returns all users
+                    console.log(doc);
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
     }
 
 
     // findUserByUserName
+    // not tested
     function findUserByUsername(req, res){
         var username = req.params.username;
-        res.json(userModel.findUserByUsername(username));
+        //res.json(userModel.findUserByUsername(username));
+        userModel.findUserByUsername(username)
+            .then(function (doc) {
+                console.log("found user");
+                console.log(doc);
+                res.json(doc);
+            },
+            function (err) {
+                res.status(400).send(err);
+            })
     }
 
-
+// updated with promise for db. 
     function findUserByCredentials(req, res){
         //console.log("user.service.server : I reached server");
         var credentials = {
@@ -104,10 +177,17 @@ module.exports = function(app, userModel){
             password: req.query.password
         }
         //console.log("credentials "+credentials);
-        var user = userModel.findUserByCredentials(credentials);
-        req.session.currentUser = user;
-
-        res.json(user);
+        var user = userModel.findUserByCredentials(credentials)
+            .then(
+                function (doc) {
+                    req.session.currentUser = user;
+                    res.json(user);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+        
     }
 
     // to be used later , remove the comment when you start using this.

@@ -23,6 +23,8 @@ Root Password: ffGre8JL4H5k
 Database Name: webdev2016
 
 Connection URL: mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/*/
+// where are these variables coming from!?
+// Ans. When this server is at openshift, then it gets these variables from there.
 
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
     connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
@@ -81,7 +83,9 @@ app.get('/api/users',function(req,res){
     //can also write res.send(users);
     // send automatically detects json
 });
-// adding db
-require("./public/assignment/server/app.js")(app, db);
+
+// passing the app to server side implimentation to use express
+// adding db and mongoose
+require("./public/assignment/server/app.js")(app, db, mongoose);
 
 app.listen(port, ipaddress);

@@ -21,7 +21,15 @@
                     <tbody>
                     <tr>
                         <td>
-                            <input ng-model="form.title" type="text" class="form-control" id="Name" placeholder="Name" required>
+                           <!-- <input ng-model="form.title" type="text" class="form-control" id="Name" placeholder="Name" required> -->
+                          <select class="col-sm-6 form-control" ng-model="model.fieldType" placeholder="Add new Things: LED, sound sensor etc">
+                              <option value="singleText">LED</option>
+                              <!--<option value="date">Date</option>
+                              <option value="dropDown">Dropdown</option>
+                              <option value="checkBoxes">Checkboxes</option>
+                              <option value="radioButtons">Radio Buttons</option>
+                              <option value="paragraphTextField">Paragraph Text Field</option>-->
+                              </select>
                         </td>
 
                         <td>
