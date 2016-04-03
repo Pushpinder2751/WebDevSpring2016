@@ -128,16 +128,19 @@ module.exports = function(db, mongoose) {
         var deferred = q.defer();
         formModel.update(
             {_id: formId},
-            {$ser: newForm},
+            {$set: newForm},
             function (err, stats) {
                 if(err) {
                     deferred.reject(err)
                 }else {
                     // this does not return form
                     // find and return form again
-                    formModel.findFormById(formId,
-                        function (err, doc) {
+                    findFormById(formId)
+                        .then(
+                        function (doc, err) {
                             if(err){
+                                console.log("update form: there was an error");
+                                console.log(err);
                                 deferred.reject(err);
                             }else{
                                 deferred.resolve(doc);
@@ -146,7 +149,7 @@ module.exports = function(db, mongoose) {
                 }
             }
         );
-        deferred.promise;
+       return deferred.promise;
 
     }
 
@@ -324,8 +327,8 @@ module.exports = function(db, mongoose) {
                     form.fields.push(newField1)
                     form.save(function (err, doc) {
                         if(err){
-                            console.log("there was an error");
-                            console.log(err);
+                           // console.log("there was an error");
+                            //console.log(err);
                             deferred.reject(err);
                         }else{
                             console.log("done");

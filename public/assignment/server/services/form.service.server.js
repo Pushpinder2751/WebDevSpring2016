@@ -8,43 +8,100 @@ module.exports = function(app, formModel){
     
     app.get("/api/assignment/check/:userId/:formName", checkExistingForm);
 
+    // updated for db
     function findAllFormsForUser(req, res){
         // not sure if params is to be used here
         //console.log("I reach things in server");
         var userId = req.params.userId;
         //console.log(userId);
-        res.json(formModel.findAllFormsForUser(userId));
+        formModel.findAllFormsForUser(userId)
+            .then(function (form) {
+                res.json(form);
+            },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
 
     }
 
     function findFormById(req , res){
         var formId = req.params.formId;
-        res.json(formModel.findFormById(formId));
+        formModel.findFormById(formId)
+            .then(
+                function (form) {
+                    res.json(form)
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
-
+// returns all forms for user
     function deleteFormById(req, res){
         var formId = req.params.formId;
-        res.json(formModel.deleteFormById(formId));
+        formModel.deleteFormById(formId)
+            .then(
+                function (doc) {
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function createForm(req, res){
         var userId = req.params.userId;
         var form = req.body;
         console.log("body: "+form);
-        res.json(formModel.createForm(userId, form));
+        formModel.createForm(userId, form)
+            .then(
+                function (form) {
+                    res.json(form);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
-
+// returns form
     function updateFormById(req, res){
         var formId = req.params.formId;
         var newForm = req.body;
-        res.json(formModel.updateFormById(formId, newForm));
+        formModel.updateFormById(formId, newForm)
+            .then(
+                function (doc) {
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
+    // might need fixing
     function checkExistingForm(req, res) {
         var userId = req.params.userId;
         var form = req.params.formName;
-        //console.log("1111 "+ form);
-        res.send(formModel.checkExistingForm(userId, form));
+       // console.log("1111 "+ form);
+        formModel.checkExistingForm(userId, form)
+            .then(
+                function (doc) {
+                    // need to return 1
+                    if(doc.length == 0){
+                        console.log("this is good, there's no existing form!");
+                        res.json({"value" : "noForm"});
+                    }else{
+                        res.json({"value" : "form"});
+                    }
+
+                },
+                function (err) {
+                    var value = 1;
+                    res.send(value);
+                }
+            );
     }
 
     

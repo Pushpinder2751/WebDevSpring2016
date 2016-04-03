@@ -22,6 +22,7 @@
         //retrieve the currently loggedin user from the $rootScope
         console.log($scope.user);
         var userId = $scope.user._id;
+        console.log(userId);
 
         function update(user){
             console.log("I am in updateUser");
@@ -33,6 +34,7 @@
                     console.log("updated response ");
                     console.log(response.data);
                     $scope.user = response.data;
+                    
                     UserService
                         .setCurrentUser(response.data);
                 });

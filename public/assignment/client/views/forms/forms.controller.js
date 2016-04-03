@@ -49,9 +49,13 @@
                 var checkExistingForms = FormService
                                             .checkExistingForm(userId, form)
                                             .then(function (response) {
-                                                console.log("check "+response.data);
-                                                checkExistingForms = response.data;
-
+                                                console.log("check ");
+                                                console.log(response.data);
+                                                var answer = response.data.value;
+                                                if(answer == "noForm"){
+                                                    console.log("this is good");
+                                                    checkExistingForms = 0;
+                                                }
                                                 if(checkExistingForms == 0){
 
                                                     FormService
@@ -104,7 +108,7 @@
                     .then (function(updateForms){
                     console.log("Form Deleted: "+formId+" :(");
                     // not sure why
-                    $scope.form.title="";
+                    //$scope.form.title="";
                     $scope.hideplus = false;
                     formsForCurrentUser();
                 });

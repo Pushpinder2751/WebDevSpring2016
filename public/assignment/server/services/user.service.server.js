@@ -63,6 +63,7 @@ module.exports = function(app, userModel){
         console.log(req.query.password);
         console.log("entered reroute");
         if(req.query.username && req.query.password){
+            console.log("finding user by credentials");
             findUserByCredentials(req, res);
         }
         else if(req.query.username){
@@ -125,6 +126,7 @@ module.exports = function(app, userModel){
                 function (doc) {
                     //console.log("sending updated user");
                     //console.log(doc);
+                    req.session.currentUser = doc;
                     res.json(doc);
 
                 },
@@ -175,13 +177,15 @@ module.exports = function(app, userModel){
         var credentials = {
             username: req.query.username,
             password: req.query.password
-        }
+        };
         //console.log("credentials "+credentials);
         var user = userModel.findUserByCredentials(credentials)
             .then(
                 function (doc) {
-                    req.session.currentUser = user;
-                    res.json(user);
+                    req.session.currentUser = doc;
+                    console.log("sending back user: ");
+                    console.log(doc);
+                    res.json(doc);
                 },
                 function (err) {
                     res.status(400).send(err);
@@ -193,7 +197,7 @@ module.exports = function(app, userModel){
     // to be used later , remove the comment when you start using this.
     function loggedin(req, res) {
         console.log("in Logged in function");
-        //console.log(req.session.currentUser);
+        console.log(req.session.currentUser);
         res.json(req.session.currentUser);
     }
 

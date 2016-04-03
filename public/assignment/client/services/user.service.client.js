@@ -79,7 +79,7 @@
         }
 
         function updateUser(userId,user){
-            //console.log("update User");
+            console.log("update User");
             return $http.put("/api/assignment/user/"+userId, user);
         }
 

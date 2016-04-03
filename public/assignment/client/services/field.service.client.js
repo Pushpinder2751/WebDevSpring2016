@@ -36,7 +36,8 @@
 
         // singular
         // this is to get field from id is equal to the fieldId and belonging
-        // to a form object whise id is equal to the formId
+        // to a form object whose id is equal to the formId
+        // I am not using it anywhere for now!!
         function getFieldForForm(formId, fieldId) {
             return $http.get("/api/assignment/form/"+formId+"/field/"+fieldId );
         }

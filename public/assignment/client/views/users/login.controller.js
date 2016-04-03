@@ -22,9 +22,10 @@
                 .then(function (response) {
                     if(response.data){
                         console.log(response.data);
-                            console.log(response.data);
+                           // console.log(response.data);
                             // old implementation
                             // $rootScope.user = response.data;
+                            console.log("setting current user");
                             UserService.setCurrentUser(response.data);
                             $location.url("/profile");
 

@@ -110,8 +110,10 @@
             FieldService
                 .createFieldForForm(vm.currentForm._id, newFieldTemplate)
                 .then(function (response) {
-                    console.log(" response :"+response.data);
+                    console.log(" response :");
+                    console.log(response.data);
                     vm.fields = response.data;
+                    init();
                 })
         }
         
@@ -126,10 +128,13 @@
         }
 
         function removeField(field) {
+            console.log("fieldId to delte ");
+            console.log(field);
             FieldService
                 .deleteFieldForForm(vm.currentForm._id, field._id)
                 .then(function (response) {
                     vm.fields = response.data;
+                    init();
                 })
         }
 
@@ -156,6 +161,7 @@
                 //vm.field.options = vm.newOptions;
 
             }
+
         }
 
         function updateField(field) {
@@ -193,6 +199,7 @@
                     console.log("updated fields ");
                     console.log(vm.fields);
                 })
+            init();
         }
 
         function check(fields1){
