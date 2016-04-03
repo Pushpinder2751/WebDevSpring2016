@@ -233,6 +233,8 @@ module.exports = function(db, mongoose){
                     deferred.reject(err);
                 }else{
                     // resolve promise
+                    //console.log("found user: ");
+                    //console.log(doc);
                     deferred.resolve(doc);
                 }
 
