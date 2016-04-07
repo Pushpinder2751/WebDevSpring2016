@@ -54,8 +54,8 @@
 
         function setCurrentUser(user) {
             $rootScope.currentUser = user;
-            console.log("current user :");
-            console.log($rootScope.currentUser);
+            console.log("Set current user done!");
+           // console.log($rootScope.currentUser);
         }
 
         function findUserByUsername(username) {
@@ -86,7 +86,13 @@
         // removing callback to use $http to retrieve user from server, eventually db
         function findUserByCredentials(username, password){
             // might need to fix this
-            return $http.get("/api/assignment/user?username="+username+"&password="+password);
+            // do I need get or post request here?
+            var user={};
+            user.username = username;
+            user.password = password;
+            return $http.post("/api/assignment/login", user);
+
+            //return $http.get("/api/assignment/user?username="+username+"&password="+password);
         }
 
 

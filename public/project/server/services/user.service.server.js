@@ -2,7 +2,7 @@
 module.exports = function(app, userModel){
     // generic web service requirement first
     app.post("/api/assignment/user", createUser);
-    app.get("/api/assignment/user", reroute);
+    app.get("/api/project/user", reroute);
     app.get("/api/assignment/user/:userId", findUserById);
     app.put("/api/assignment/user/:userId", updateUser);
     app.delete("/api/assignment/user/:userId", deleteUser);
@@ -46,6 +46,7 @@ module.exports = function(app, userModel){
         console.log(req.query.password);
         console.log("entered reroute");
         if(req.query.username && req.query.password){
+            console.log("i am here");
             findUserByCredentials(req, res);
         }
         else if(req.query.username){
@@ -98,7 +99,7 @@ module.exports = function(app, userModel){
 
 
     function findUserByCredentials(req, res){
-        //console.log("user.service.server : I reached server");
+        console.log("user.service.server : I reached server");
         var credentials = {
             username: req.query.username,
             password: req.query.password

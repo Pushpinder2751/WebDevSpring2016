@@ -60,6 +60,11 @@
                     controller: "FieldsController",
                     controllerAs:"model"
                 })
+                .when("/thingFields",{
+                    templateUrl: "views/fields/thing-fields.html",
+                    controller: "thingFieldsController",
+                   // controllerAs: "model"
+                })
                 .otherwise({
                     redirectTo: "/home"
                 });

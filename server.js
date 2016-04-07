@@ -8,6 +8,9 @@ var session = require('express-session');
 
 var mongoose = require('mongoose');
 
+// load passport module
+var passport = require('passport');
+
 // if it does not find the db, it creates one
 var connectionString = 'mongodb://127.0.0.1:27017/cs5610';
 
@@ -56,8 +59,14 @@ app.use(multer());
 // what do I have to do in openshift for this??
 // search setting environment  custom variables for openshift
 // ask professor about the error below.
-app.use(session({ secret: process.env.PASSPORT_SECRET }));
+// has to be in this order for passport to work
 app.use(cookieParser());
+app.use(session({ secret: process.env.PASSPORT_SECRET }));
+
+// initialize passport and session support
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // where to fetch the static content
 // __dirname = directory name
@@ -86,6 +95,7 @@ app.get('/api/users',function(req,res){
 
 // passing the app to server side implimentation to use express
 // adding db and mongoose
+//require("./public/project/server/app.js")(app, db, mongoose);
 require("./public/assignment/server/app.js")(app, db, mongoose);
 
 app.listen(port, ipaddress);

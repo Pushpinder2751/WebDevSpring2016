@@ -66,7 +66,7 @@
 
         }]);
 
-        function checkLoggedIn(UserService, $q, $location) {
+        function checkLoggedIn(UserService, $q, $timeout, $http, $location, $rootScope) {
             // don't know how this works yet
             console.log("I am in checkedLoggedIn");
             var deferred = $q.defer();
@@ -74,7 +74,7 @@
             UserService
                 .getCurrentUser()
                 .then(function (response) {
-                    var currentUser = response.data;
+                    /*var currentUser = response.data;
                     if(currentUser){
                         UserService.setCurrentUser(currentUser)
                         deferred.resolve();
@@ -83,8 +83,24 @@
                         console.log("not logged IN!!");
                         // need to change the url to login page later
                         $location.url("/home");
+                    }*/
+
+                    $rootScope.errorMessage = null;
+
+                    // user is Authenticated
+                    if (response.data !== '0'){
+                        console.log("you are authenticated!");
+                        console.log(response.data);
+                        UserService.setCurrentUser(response.data);
+                        deferred.resolve()
                     }
-                })
+                    // user is not Authenticated
+                    else{
+                        $rootScope.error = 'You need to log in!';
+                        deferred.reject();
+                        $location.url("/home");
+                    }
+                });
 
             return deferred.promise;
         }
@@ -97,8 +113,12 @@
                 .then(function (response) {
                     if(response.data){
                         console.log("got user");
-                        var currentUser = response.data;
-                        UserService.setCurrentUser(currentUser);
+                        console.log(response.data);
+                        if (response.data !== '0'){
+                            var currentUser = response.data;
+                            UserService.setCurrentUser(currentUser);
+                        }
+
                     }
 
 

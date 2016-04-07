@@ -90,7 +90,7 @@ module.exports = function(db, mongoose){
 
     // now looks up db
     function findUserById (userId) {
-        userId = parseInt(userId);
+        //userId = parseInt(userId);
        // console.log(userId);
 
         // old way
@@ -103,11 +103,13 @@ module.exports = function(db, mongoose){
         console.log("No user by this userId!");
         return null;*/
 
-        var deferred = q.derer();
+        var deferred = q.defer();
         userModel.findById(userId, function (err, doc) {
             if(err){
                 deferred.reject(err);
             }else{
+                //console.log("I got till here");
+                //console.log(doc);
                 deferred.resolve(doc);
             }
         });
@@ -218,6 +220,10 @@ module.exports = function(db, mongoose){
         console.log("no user found by credentials");
         return null;*/
 
+
+        // console.log("credentials :");
+        // console.log(credentials);
+
         var deferred = q.defer();
 
         // find one retrieves one document
@@ -233,7 +239,7 @@ module.exports = function(db, mongoose){
                     deferred.reject(err);
                 }else{
                     // resolve promise
-                    //console.log("found user: ");
+                    console.log("found user: ");
                     //console.log(doc);
                     deferred.resolve(doc);
                 }

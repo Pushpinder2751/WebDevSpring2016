@@ -59,7 +59,7 @@
 
         function findUserByUsername(username) {
             // not sure if this is the right way
-            return $http.get("/api/assignment/user?username"+ username);
+            return $http.get("/api/project/user?username"+ username);
         }
 
         function deleteUserById(userId){
@@ -70,7 +70,7 @@
         // I am not sure if this is right
 
         function findAllUsers(){
-            return $http.get("/api/assignment/user");
+            return $http.get("/api/project/user");
         }
 
         function createUser(user){
@@ -79,13 +79,13 @@
 
         function updateUser(userId,user){
             //console.log("update User");
-            return $http.put("/api/assignment/user/"+userId, user);
+            return $http.put("/api/project/user/"+userId, user);
         }
 
         // removing callback to use $http to retrieve user from server, eventually db
         function findUserByCredentials(username, password){
             // might need to fix this
-            return $http.get("/api/assignment/user?username="+username+"&password="+password);
+            return $http.get("/api/project/user?username="+username+"&password="+password);
         }
 
 

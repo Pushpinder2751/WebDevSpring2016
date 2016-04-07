@@ -1,5 +1,6 @@
 
-
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 
 module.exports = function(app, userModel){
@@ -9,8 +10,54 @@ module.exports = function(app, userModel){
     app.get("/api/assignment/user/:userId", findUserById);
     app.put("/api/assignment/user/:userId", updateUser);
     app.delete("/api/assignment/user/:userId", deleteUser);
+
+    // for security
+    var auth = authorized;
+    app.post("/api/assignment/login", passport.authenticate('local'), login);
     app.get("/api/assignment/loggedin", loggedin);
     app.post("/api/assignment/logout", logout);
+
+    passport.use(new LocalStrategy(localStrategy));
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+
+
+    function localStrategy(username, password, done) {
+
+        // console.log("username : "+username);
+        // console.log("password: "+password);
+
+        var user = userModel.findUserByCredentials({username: username, password: password})
+            .then(
+                function (user) {
+                    if(!user){
+                        // 1st argument, is to return error
+                        return done(null, false);
+                    }
+                    //req.session.currentUser = user;
+                    console.log("sending back user: ");
+                   // console.log(user);
+                    delete user.password;
+                    return done(null, user);
+                },
+                function (err) {
+                    if(err) {
+                        return done(err);
+                    }
+                }
+            )
+
+    }
+
+    // will add the logged in user to session and cookie
+    // will come here only after authentication
+    function login(req, res) {
+        console.log("in login");
+        //console.log(req.user);
+        var user = req.user;
+        delete user.password;
+        res.json(user);
+    }
 
     //user service specific requirements
     // might need to update this
@@ -18,17 +65,60 @@ module.exports = function(app, userModel){
     // this is what is asked in the assignment, so not sure
     //app.get("/api/assignment/user/:username", findUserByUsername);
     // GET /api/assignment/user?username=alice&password=wonderland
-    // do I user "?"
+    // do I use "?"
     //app.get("/api/assignment/user?username=username&password=password", findUserByCredentials);
 
+    // when response goes back to the client
+    function serializeUser(user, done) {
+        delete user.password;
+        done(null, user);
+    }
+
+    function deserializeUser(user, done) {
+        var user = userModel.findUserById(user._id)
+            .then(
+                //return user if promise if resolved
+                function (user) {
+                    // this does not delete anything!
+                    delete user.password;
+                    console.log("deserialize user");
+                    //console.log(user);
+                    done(null, user);
+                },
+                function (err) {
+                    done(err, null);
+                }
+            );
+    }
 
 
 //"cleverly" named same as the model function names
 
     function logout(req, res) {
+        req.logOut();
         req.session.destroy();
         res.send(200);
     }
+
+    // to be used later , remove the comment when you start using this.
+    function loggedin(req, res) {
+        console.log("in Logged in function");
+        //console.log(req.user);
+        /*console.log(req.session.currentUser);
+        res.json(req.session.currentUser);*/
+
+        res.send(req.isAuthenticated() ? req.user : '0');
+    }
+    
+
+
+    function authorized (req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
+        }
+    };
 
 
 // post to Create new User
@@ -184,7 +274,7 @@ module.exports = function(app, userModel){
                 function (doc) {
                     req.session.currentUser = doc;
                     console.log("sending back user: ");
-                    console.log(doc);
+                   // console.log(doc);
                     res.json(doc);
                 },
                 function (err) {
@@ -194,12 +284,7 @@ module.exports = function(app, userModel){
         
     }
 
-    // to be used later , remove the comment when you start using this.
-    function loggedin(req, res) {
-        console.log("in Logged in function");
-        console.log(req.session.currentUser);
-        res.json(req.session.currentUser);
-    }
+
 
 
 
