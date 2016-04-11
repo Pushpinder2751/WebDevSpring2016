@@ -9,7 +9,8 @@
         var api = {
             trackThing: trackThing,
             findThingsForCurrentUser: findThingsForCurrentUser,
-            updateThingStatus: updateThingStatus
+            updateThingStatus: updateThingStatus,
+            unfollowThing: unfollowThing
         };
 
         return api;
@@ -27,9 +28,18 @@
             return $http.get("/api/project/user/"+userId);
         }
 
-        function updateThingStatus(thing) {
+        function updateThingStatus(thing, user) {
             console.log("updating..");
-            return $http.put("/api/project/updateThing", thing);
+            var data ={};
+            data.thing = thing;
+            data.user = user;
+            return $http.put("/api/project/updateThing", data);
+        }
+        
+        function unfollowThing(userId, thing) {
+            console.log("unfollowing...");
+            // for now just sending userId, might need user to create log
+            return $http.delete("/api/project/unfollowThing/"+userId+"/"+thing._id);
         }
     }
 

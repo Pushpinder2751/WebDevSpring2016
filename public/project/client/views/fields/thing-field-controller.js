@@ -40,7 +40,7 @@
                 vm.currentThing.update = new Date();
             }
             ThingService
-                .updateThingStatus(vm.currentThing)
+                .updateThingStatus(vm.currentThing, vm.currentUser)
                 .then(function (response) {
                     console.log("updated status on server");
                 });

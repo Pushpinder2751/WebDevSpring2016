@@ -3,8 +3,12 @@ module.exports = function (mongoose) {
     var DataSchema = mongoose.Schema({
         //_id
         thing: String,
-        value: [Number],
-        time: [Date]
+
+        details : [{
+                value : Number,
+                time : Date
+                  }]
+
     });
 }
 

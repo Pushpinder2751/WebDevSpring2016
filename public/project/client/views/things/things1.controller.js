@@ -38,6 +38,7 @@
         // register functions 
         vm.trackThing = trackThing;
         vm.selectThing = selectThing;
+        vm.unfollowThing = unfollowThing;
 
         function trackThing(thing) {
             console.log("Track this");
@@ -57,6 +58,7 @@
                 .then(function (response) {
                     console.log("back from ThingService");
                     console.log(response.data);
+                    thingsForCurrentUser();
                 })
         }
         
@@ -65,6 +67,18 @@
             console.log(thing);
             $rootScope.thing = thing;
             $location.path("/thing/{{thing._id}}/fields");
+        }
+
+        function unfollowThing(thing) {
+            console.log("user does not want to follow :"+thing);
+
+            ThingService
+                .unfollowThing(userId, thing)
+                .then(function (response) {
+                    console.log("deleted in db");
+                    console.log(response.data);
+                    thingsForCurrentUser();
+                });
         }
 
 

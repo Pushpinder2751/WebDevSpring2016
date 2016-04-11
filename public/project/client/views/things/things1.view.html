@@ -24,8 +24,8 @@
                     <!-- <input ng-model="form.title" type="text" class="form-control" id="Name" placeholder="Name" required> -->
                     <select class="col-sm-6 form-control" ng-model="model.thing" >
                         <option value="led">LED</option>
-                        <!--<option value="date">Date</option>
-                        <option value="dropDown">Dropdown</option>
+                        <option value="lightSensor">LightSensor</option>
+                        <!--<option value="dropDown">Dropdown</option>
                         <option value="checkBoxes">Checkboxes</option>
                         <option value="radioButtons">Radio Buttons</option>
                         <option value="paragraphTextField">Paragraph Text Field</option>-->
@@ -41,7 +41,7 @@
                     <a  ng-click="model.selectThing(thing)">{{thing.title}}</a>
                 </td>
                 <td>
-                    <a ng-click="deleteForm(form._id)"><span class="glyphicon glyphicon-remove pull-left" area-hidden="true"></span></a>
+                    <a ng-click="model.unfollowThing(thing)"><span class="glyphicon glyphicon-remove pull-left" area-hidden="true"></span></a>
                 </td>
             </tr>
             </tbody>
