@@ -1,0 +1,52 @@
+
+
+
+
+<div class="container-fluid">
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+        <h1>Things </h1>
+        <ul class = "nav nav-tabs">
+            <li class="active"><a href="#/thing">Thing</a></li>
+            <li><a href="#/thingFields">Fields</a></li>
+        </ul>
+        <table class="table table-striped table table-bordered table-responsive">
+            <thead>
+            <tr class="theadrow">
+                <th><span class="caret"></span>Things Tracked : </th>
+                <th class="th-action">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <!-- <input ng-model="form.title" type="text" class="form-control" id="Name" placeholder="Name" required> -->
+                    <select class="col-sm-6 form-control" ng-model="model.thing" >
+                        <option value="led">LED</option>
+                        <!--<option value="date">Date</option>
+                        <option value="dropDown">Dropdown</option>
+                        <option value="checkBoxes">Checkboxes</option>
+                        <option value="radioButtons">Radio Buttons</option>
+                        <option value="paragraphTextField">Paragraph Text Field</option>-->
+                    </select>
+                </td>
+
+                <td>
+                    <a ng-hide="hideplus" ng-click="model.trackThing(model.thing)"><span class="glyphicon glyphicon-plus pull-left" aria-hidden="true" ></span></a>
+                </td>
+            </tr>
+            <tr ng-repeat="thing in model.things" ng-class="{'selected-form': $index == selected}">
+                <td>
+                    <a  ng-click="model.selectThing(thing)">{{thing.title}}</a>
+                </td>
+                <td>
+                    <a ng-click="deleteForm(form._id)"><span class="glyphicon glyphicon-remove pull-left" area-hidden="true"></span></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+

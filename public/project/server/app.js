@@ -8,6 +8,10 @@ module.exports = function (app, db, mongoose) {
     // does formService require userModel? 
     var formService = require("./services/form.service.server.js")(app, formModel);
     // should I be creating new fieldModel for this? 
-    var fieldService = require("./services/field.service.server")(app, formModel);
+    var fieldService = require("./services/field.service.server.js")(app, formModel);
+
+    // for the project
+    var thingModel = require("./models/thing.model")(db, mongoose);
+    var thingService = require("./services/thing.service.server.js")(app, thingModel);
 
 };

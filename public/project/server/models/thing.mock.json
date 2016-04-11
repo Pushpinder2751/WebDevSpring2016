@@ -1,0 +1,18 @@
+[
+  {
+    "_id" : "01",
+    "title": "led",
+    "status": "on",
+    "type" : "input",
+    "userId": [234]
+  },
+  {
+    "_id" : "02",
+    "title": "lightSensor",
+    "status": "off",
+    "type" : "output",
+    "value": ["12", "14"],
+    "userId": [234]
+  }
+
+]

@@ -46,8 +46,8 @@
                     controllerAs:"model"
                 })
                 .when("/thing", {
-                    templateUrl: "views/things/things.view.html",
-                    controller: "FormController",
+                    templateUrl: "views/things/things1.view.html",
+                    controller: "ThingsController",
                     controllerAs:"model"
                 })
                 .when("/fields",{
@@ -55,15 +55,15 @@
                     controller: "FieldsController",
                     controllerAs:"model"
                 })
-                .when("/form/:formId/fields",{
-                    templateUrl: "views/fields/form-fields.view.html",
-                    controller: "FieldsController",
+                .when("/thing/:thingId/fields",{
+                    templateUrl: "views/fields/thing-fields.html",
+                    controller: "thingFieldsController",
                     controllerAs:"model"
                 })
                 .when("/thingFields",{
                     templateUrl: "views/fields/thing-fields.html",
                     controller: "thingFieldsController",
-                   // controllerAs: "model"
+                    controllerAs: "model"
                 })
                 .otherwise({
                     redirectTo: "/home"

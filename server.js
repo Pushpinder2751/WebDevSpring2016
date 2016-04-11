@@ -71,8 +71,9 @@ app.use(passport.session());
 // where to fetch the static content
 // __dirname = directory name
 // '/public' from public direcory
-
+//app.use('/scripts', express.static(__dirname + '/node_modules'));
 app.use(express.static(__dirname + '/public'));
+
 
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
@@ -95,7 +96,7 @@ app.get('/api/users',function(req,res){
 
 // passing the app to server side implimentation to use express
 // adding db and mongoose
-//require("./public/project/server/app.js")(app, db, mongoose);
+require("./public/project/server/app.js")(app, db, mongoose);
 require("./public/assignment/server/app.js")(app, db, mongoose);
 
 app.listen(port, ipaddress);

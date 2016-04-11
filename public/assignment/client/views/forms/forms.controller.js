@@ -30,7 +30,8 @@
                 FormService
                     .findAllFormsForUser(userId)
                     .then(function (response) {
-                        console.log("abc : "+response.data);
+                        console.log("abc : ");
+                        console.log(response.data);
                         $scope.forms = response.data;
                     });
                 /*{
