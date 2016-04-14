@@ -57,6 +57,8 @@ module.exports = function(db, mongoose) {
         return deferred.promise;
     }
 
+    // the update function is very important
+    // this is the function which will update the device
     function updateThingStatus(thing) {
         var deferred = q.defer();
 
@@ -71,16 +73,7 @@ module.exports = function(db, mongoose) {
                 deferred.resolve(doc);
             }
         });
-        /*thing.save(function (err, doc) {
-            if(err){
-                console.log("update error");
-                deferred.reject(err);
-            }else{
-                console.log("updated");
-                console.log(doc);
-                deferred.resolve(doc);
-            }
-*/
+
             return deferred.promise;
     }
 

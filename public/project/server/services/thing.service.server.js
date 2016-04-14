@@ -5,6 +5,61 @@ module.exports = function (app, thingModel) {
     app.put("/api/project/updateThing", updateThingStatus);
     app.delete("/api/project/unfollowThing/:userId/:thingId", unfollowThing);
 
+    app.get("/edison", sendUpdateToBoard);
+    app.post("/edison/lightSensor", lightSensorData);
+    var updateFlag = false;
+    var updatedThing = {};
+    var update;
+    function sendUpdateToBoard(req, res) {
+        // receive values from the board here
+
+        if(updateFlag){
+            //send updates here
+            update = {
+                lcd: {
+                    status: "on",
+                    value: "i got an update"
+                },
+                data : {
+                    title: "lightSensor",
+                    status: "off"
+                }
+                
+            };
+            res.json(update);
+            // reset the global variable for new values
+            updatedThing = {};
+            // change the flag for next update
+            updateFlag = false;
+            
+        }else{
+            update = {
+                lcd: {
+                    status: "on",
+                    value: "nothing to update"
+                },
+                data : {
+                    title: "lightSensor",
+                    status: "on"
+                }
+
+       };
+            res.json(update);
+        }
+    };
+
+    function lightSensorData(req, res) {
+        console.log("got lightsensor data");
+        console.log(req.body);
+        res.json({light: "getting data"});
+
+    }
+
+
+
+
+
+
 
 
     function trackThing(req, res) {
@@ -49,6 +104,11 @@ module.exports = function (app, thingModel) {
         thingModel.updateThingStatus(thing)
             .then(function (thing) {
                 console.log("sending back update");
+                // on a successful update in the db, set updateFlag to true
+                // to actually send device the update.
+                updateFlag = true;
+                updatedThing = thing;
+
                 res.json(thing)
             },function (err) {
                 res.status(400).send(err);
