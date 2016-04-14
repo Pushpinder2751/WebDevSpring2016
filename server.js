@@ -58,10 +58,14 @@ app.use(multer());
 
 // what do I have to do in openshift for this??
 // search setting environment  custom variables for openshift
-// ask professor about the error below.
-// has to be in this order for passport to work
+
 app.use(cookieParser());
-app.use(session({ secret: process.env.PASSPORT_SECRET }));
+// do not know what it does, just used as instructed in api
+app.use(session({
+    secret: process.env.PASSPORT_SECRET,
+    resave: true,
+    saveUninitialized: true
+}));
 
 // initialize passport and session support
 app.use(passport.initialize());
@@ -82,6 +86,7 @@ app.get('/hello', function(req, res){
     res.send('hello world');
 });
 
+// this is just an example
 app.get('/api/users',function(req,res){
     var users = [
         {username: 'Pushpinder', first: 'Pushpinder', last: 'Singh'},
@@ -94,7 +99,7 @@ app.get('/api/users',function(req,res){
     // send automatically detects json
 });
 
-// passing the app to server side implimentation to use express
+// passing the app to server side implementation to use express
 // adding db and mongoose
 require("./public/project/server/app.js")(app, db, mongoose);
 require("./public/assignment/server/app.js")(app, db, mongoose);

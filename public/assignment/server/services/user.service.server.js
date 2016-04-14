@@ -95,8 +95,10 @@ module.exports = function(app, userModel){
 //"cleverly" named same as the model function names
 
     function logout(req, res) {
+        // using passport function logOut
         req.logOut();
-        req.session.destroy();
+        // no need for session.destroy, logOut() does this for us
+        // req.session.destroy();
         res.send(200);
     }
 
