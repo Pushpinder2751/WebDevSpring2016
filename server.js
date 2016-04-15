@@ -52,6 +52,10 @@ db.once('open', function() {
 console.log("secret");
 console.log(process.env.PASSPORT_SECRET);
 
+app.get('/secret', function (req, res) {
+    res.json(process.env);
+})
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
