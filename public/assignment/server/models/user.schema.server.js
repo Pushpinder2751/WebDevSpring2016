@@ -8,8 +8,21 @@ module.exports = function(mongoose) {
             password: String,
             firstName: String,
             lastName: String,
-            email: [String],
-            phones: [String]
+            emails: [String],
+            phones: [String],
+            roles: [String]
         }, {collection: "assignment.user"});
     return UserSchema;
 };
+
+/*
+{
+    "username": "bob",
+    "password": "bob",
+    "firstName": "bob",
+    "lastName": "bob",
+    "emails": ["bob@b"],
+    "phones": ["123"],
+    "roles":["admin"]
+
+}*/

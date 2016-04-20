@@ -45,14 +45,26 @@ module.exports = function(db, mongoose){
 
         // use q to defer the response
         var deferred = q.defer();
-        user.phones = [123];
-        user.email = [user.email];
+        //user.phones = [123];
+        // should be a better way to do this?
+        //user.email = [user.email];
 
-        //console.log(user);
+       // have to do something about name
+        var newUser = {
+            "username": user.username,
+            "password": user.password,
+            "firstName": user.firstName,
+            "lastName": user.lastName,
+            "emails" : [user.email],
+            "phones" : [user.phones],
+            "roles" : user.roles
+        };
+        console.log("final create user1")
+        console.log(newUser);
 
         // insert new user with mongoose user model's create()
         // the doc will have _id created for user by mongo
-        userModel.create(user, function (err, doc) {
+        userModel.create(newUser, function (err, doc) {
 
             if(err){
                 //reject promise if error
@@ -75,10 +87,10 @@ module.exports = function(db, mongoose){
        // return mock;
         // not sure about this yet
         var deferred = q.defer();
-        userModel.find({
-            userId: {$in: userId}
-        }, function (err, users) {
+        userModel.find(
+            function (err, users) {
             if(err){
+                console.log(err);
                 deferred.reject(err);
             }else {
                 deferred.resolve(users);
@@ -194,7 +206,7 @@ module.exports = function(db, mongoose){
         console.log("no user by this username");
         return null;*/
         var deferred = q.defer();
-        userModel.findone(
+        userModel.findOne(
             {username: username},
             function (err, user) {
                 if(err){

@@ -113,6 +113,7 @@ module.exports = function(db, mongoose) {
     // updated for db
     function updateFormById (formId, newForm) {
 
+        newForm.update = Date.now();
         console.log("update formId: "+formId);
         console.log("update form: "+newForm );
         /*for(var i in mock){

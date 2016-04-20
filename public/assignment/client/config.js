@@ -43,7 +43,10 @@
                 .when("/admin", {
                     templateUrl: "views/users/admin.view.html",
                     controller: "AdminController",
-                    controllerAs:"model"
+                    controllerAs:"model",
+                    resolve: {
+                        ckeckAdmin: checkAdmin
+                    }
                 })
                 .when("/forms", {
                     templateUrl: "views/forms/forms.view.html",
@@ -86,6 +89,8 @@
                     }*/
 
                     $rootScope.errorMessage = null;
+                    console.log("response from checkloggedin!");
+                    console.log(response.data);
 
                     // user is Authenticated
                     if (response.data !== '0'){
@@ -124,5 +129,37 @@
 
                     deferred.resolve();
                 });
+            return deferred.promise;
         }
+
+        function checkAdmin(UserService, $q, $timeout, $http, $location, $rootScope) {
+            console.log("checking for admin");
+            var deferred = $q.defer();
+
+            UserService
+                .getCurrentUser()
+                .then(function (response) {
+
+                    $rootScope.errorMessage = null;
+                    console.log("response from checkloggedin!");
+                    console.log(response.data);
+
+                    // user is Authenticated
+                    if (response.data !== '0' && response.data.roles.indexOf('admin') != -1){
+                        console.log("You are indeed admin");
+                        console.log(response.data);
+                        UserService.setCurrentUser(response.data);
+                        deferred.resolve();
+                    }
+                    // user is not Authenticated
+                    else{
+                        $rootScope.error = 'You are not Admin!';
+                        deferred.reject();
+                        $location.url("/home");
+                    }
+                });
+
+            return deferred.promise;
+
+        };
 })();

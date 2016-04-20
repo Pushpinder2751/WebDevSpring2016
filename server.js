@@ -52,9 +52,13 @@ db.once('open', function() {
 console.log("secret");
 console.log(process.env.PASSPORT_SECRET);
 
+/*this is very cool, tell me everything about the openshift info.
+NEVER LEAVE IT UNCOMMENTED IN THE FINAL PUSH!!*/
+/*
 app.get('/secret', function (req, res) {
     res.json(process.env);
 })
+*/
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -105,7 +109,7 @@ app.get('/api/users',function(req,res){
 
 // passing the app to server side implementation to use express
 // adding db and mongoose
-require("./public/project/server/app.js")(app, db, mongoose);
+//require("./public/project/server/app.js")(app, db, mongoose);
 require("./public/assignment/server/app.js")(app, db, mongoose);
 
 app.listen(port, ipaddress);

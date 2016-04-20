@@ -18,15 +18,20 @@
             UserService
                 .createUser(currentUser)
                 .then(function (response) {
-                    
+
                     console.log(response.data);
-                    UserService
-                        .setCurrentUser(response.data);
+                    if(response.data != null) {
+                        UserService
+                            .setCurrentUser(response.data);
 
-                            $location.url("/profile");
+                        $location.url("/profile");
+                    }else{
+                        console.log("user already exits");
+                        // display this message
+                        $scope.message = "User with same username already Exists!";
+                    }
 
-
-                })
+                });
 
         }
 
