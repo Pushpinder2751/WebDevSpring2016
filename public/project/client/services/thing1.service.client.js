@@ -25,7 +25,7 @@
         
         function findThingsForCurrentUser(userId) {
             console.log("going to find things for user");
-            return $http.get("/api/project/user/"+userId);
+            return $http.get("/api/project/thing/"+userId);
         }
 
         function updateThingStatus(thing, user) {

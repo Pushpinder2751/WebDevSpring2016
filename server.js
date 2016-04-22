@@ -109,8 +109,10 @@ app.get('/api/users',function(req,res){
 
 // passing the app to server side implementation to use express
 // adding db and mongoose
-//require("./public/project/server/app.js")(app, db, mongoose);
-require("./public/assignment/server/app.js")(app, db, mongoose);
+
+// needs fixing, project and assignment are not playing well together because of passportjs
+require("./public/project/server/app.js")(app, db, mongoose);
+//require("./public/assignment/server/app.js")(app, db, mongoose);
 
 app.listen(port, ipaddress);
-//app.listen(8080);
+app.listen(8080);

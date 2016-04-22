@@ -35,25 +35,6 @@
                     console.log("oops!");
                 });
         }
-
-        function logout() {
-            UserService
-                .logout()
-                .then(function () {
-                    UserService.setCurrentUser(null);
-                    $location.url("/home");
-                });
-        }
-        // can I use this funtion up there?
-       /* function gotoProfile(response){
-            console.log(response);
-            if(response){
-                // this is done in user.service.client.js by professor. why?
-                $rootScope.user = user;
-                $location.url("/profile");
-            }
-        }*/
-
-
+        
     }
 })();

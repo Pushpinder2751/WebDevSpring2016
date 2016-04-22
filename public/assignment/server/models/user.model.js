@@ -1,6 +1,4 @@
 
-var mock = require("./user.mock.json");
-
 // load q promise library
 // needed as the usermodel calls are no more synchronous
 var q = require ("q");

@@ -50,11 +50,6 @@
                     controller: "ThingsController",
                     controllerAs:"model"
                 })
-                .when("/fields",{
-                    templateUrl: "views/fields/form-fields.view.html",
-                    controller: "FieldsController",
-                    controllerAs:"model"
-                })
                 .when("/thing/:thingId/fields",{
                     templateUrl: "views/fields/thing-fields.html",
                     controller: "thingFieldsController",
@@ -92,21 +87,26 @@
 
             return deferred.promise;
         }
-    
-        function getLoggedIn(UserService, $q) {
-            var deferred = $q.defer();
 
-            UserService
-                .getCurrentUser()
-                .then(function (response) {
-                    if(response.data){
-                        console.log("got user");
+    function getLoggedIn(UserService, $q) {
+        var deferred = $q.defer();
+
+        UserService
+            .getCurrentUser()
+            .then(function (response) {
+                if(response.data){
+                    console.log("got user");
+                    console.log(response.data);
+                    if (response.data !== '0'){
                         var currentUser = response.data;
                         UserService.setCurrentUser(currentUser);
                     }
 
+                }
 
-                    deferred.resolve();
-                });
-        }
+
+                deferred.resolve();
+            });
+        return deferred.promise;
+    }
 })();

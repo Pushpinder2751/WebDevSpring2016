@@ -18,23 +18,29 @@
             UserService
                 .createUser(currentUser)
                 .then(function (response) {
+
                     console.log(response.data);
-                    UserService
-                        .setCurrentUser(response.data);
+                    if(response.data != null) {
+                        UserService
+                            .setCurrentUser(response.data);
 
-                            $location.url("/profile");
+                        $location.url("/profile");
+                    }else{
+                        console.log("user already exits");
+                        // display this message
+                        $scope.message = "User with same username already Exists!";
+                    }
 
-
-                })
+                });
 
         }
 
-       /* function gotoProfile(user){
-            console.log(user);
-            if(user){
-               $rootScope.currentUser = user;
-                $location.url("/profile");
-            }
-        }*/
+        /* function gotoProfile(user){
+         console.log(user);
+         if(user){
+         $rootScope.currentUser = user;
+         $location.url("/profile");
+         }
+         }*/
     }
 })();

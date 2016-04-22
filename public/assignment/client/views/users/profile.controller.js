@@ -40,17 +40,7 @@
                 });
 
         }
-        // not sure what I need to do here
-        //this should somehow update the view
-        /*function updatedUser(doc){
-            console.log("Heloo");
-
-            if(doc){
-                // why do I need to do this in user service?
-                $rootScope.user = doc;
-            }
-            //$location.url("/profile");
-        }*/
+        
 
     }
 })();

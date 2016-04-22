@@ -1,7 +1,7 @@
 // have to add something like thingModel below
 module.exports = function (app, thingModel) {
     app.get("/api/project/thing/:thing/:userId", trackThing);
-    app.get("/api/project/user/:userId", findThingsForCurrentUser);
+    app.get("/api/project/thing/:userId", findThingsForCurrentUser);
     app.put("/api/project/updateThing", updateThingStatus);
     app.delete("/api/project/unfollowThing/:userId/:thingId", unfollowThing);
 
@@ -20,10 +20,7 @@ module.exports = function (app, thingModel) {
                     status: "on",
                     value: "i got an update"
                 },
-                data : {
-                    title: "lightSensor",
-                    status: "off"
-                }
+                data : updatedThing
                 
             };
             res.json(update);
@@ -39,8 +36,6 @@ module.exports = function (app, thingModel) {
                     value: "nothing to update"
                 },
                 data : {
-                    title: "lightSensor",
-                    status: "on"
                 }
 
        };
@@ -48,9 +43,24 @@ module.exports = function (app, thingModel) {
         }
     };
 
+    // have to record this data; 
     function lightSensorData(req, res) {
         console.log("got lightsensor data");
         console.log(req.body);
+        var data = {};
+        data.thing = "lightSensor";
+        data.details = {
+            value: req.body.value,
+            time: Date.now()
+        };
+        thingModel.dataUpdate(data)
+            .then(function (doc) {
+                console.log("db updated with data");
+
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
         res.json({light: "getting data"});
 
     }
@@ -104,6 +114,15 @@ module.exports = function (app, thingModel) {
         thingModel.updateThingStatus(thing)
             .then(function (thing) {
                 console.log("sending back update");
+                // not sure of this yet
+                thingModel.logUpdate(user, thing)
+                    .then(function (doc) {
+                        console.log("updated log");
+
+                    }, function (err) {
+                        console.log("could not update log");
+                        res.status(400).send(err);
+                    });
                 // on a successful update in the db, set updateFlag to true
                 // to actually send device the update.
                 updateFlag = true;

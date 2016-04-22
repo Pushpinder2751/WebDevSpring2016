@@ -21,16 +21,17 @@ module.exports = function(app, userModel){
 
     // for security
 
-    app.post("/api/assignment/login", passport.authenticate('local'), login);
+    app.post("/api/assignment/login", passport.authenticate('assignment'), login);
     app.get("/api/assignment/loggedin", loggedin);
     app.post("/api/assignment/logout", logout);
 
-    passport.use(new LocalStrategy(localStrategy));
+    passport.use( 'assignment', new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
 
     function localStrategy(username, password, done) {
+        console.log("assignment Local strategy");
 
         // console.log("username : "+username);
         // console.log("password: "+password);
@@ -79,7 +80,7 @@ module.exports = function(app, userModel){
     // will add the logged in user to session and cookie
     // will come here only after authentication
     function login(req, res) {
-        console.log("in login");
+        console.log("in assignment's login");
         console.log(req.user);
         var user = req.user;
         delete user.password;
@@ -108,7 +109,7 @@ module.exports = function(app, userModel){
                 function (user) {
                     // this does not delete anything!
                     delete user.password;
-                    console.log("deserialize user");
+                    console.log("deserialize assignment.user");
                     //console.log(user);
                     done(null, user);
                 },
@@ -385,11 +386,6 @@ module.exports = function(app, userModel){
             )
         
     }
-
-
-
-
-
-
+    
 };
 

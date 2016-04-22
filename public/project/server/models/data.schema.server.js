@@ -9,7 +9,8 @@ module.exports = function (mongoose) {
                 time : Date
                   }]
 
-    });
+    },{ collection: 'project_data'});
+    return DataSchema;
 }
 
 // how to I store data, with time? key-value pair?

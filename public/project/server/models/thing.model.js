@@ -9,11 +9,20 @@ module.exports = function(db, mongoose) {
     //model for schema
     var thingModel = mongoose.model('thingModel', ThingSchema);
 
+    var LogSchema = require("./log.schema.server")(mongoose);
+    var logModel = mongoose.model('logModel', LogSchema);
+
+    var DataSchema = require("./data.schema.server")(mongoose);
+    var dataModel = mongoose.model('dataModel', DataSchema);
+
+
     var api = {
         trackThing: trackThing,
         findThingsForCurrentUser: findThingsForCurrentUser,
         updateThingStatus: updateThingStatus,
-        unfollowThing: unfollowThing
+        unfollowThing: unfollowThing,
+        logUpdate: logUpdate,
+        dataUpdate: dataUpdate
     };
     return api;
     
@@ -44,13 +53,18 @@ module.exports = function(db, mongoose) {
     }
     
     function findThingsForCurrentUser(userId) {
+        console.log("looking up things for currentUser");
+        console.log(userId);
         var deferred = q.defer();
 
         thingModel.find({"userId" : userId},
             function (err, doc) {
                 if(err){
+                    console.log("error");
+                    console.log(error);
                     deferred.reject(err);
                 }else{
+                    console.log(doc);
                     deferred.resolve(doc);
                 }
             });
@@ -108,6 +122,51 @@ module.exports = function(db, mongoose) {
         });
         return deferred.promise;
 
+    }
+    
+    function logUpdate(user, thing) {
+        console.log("in log update");
+        var deferred = q.defer();
+
+        var log = {
+            user: user.username,
+            thing: thing.title,
+            status: thing.status,
+            update: Date.now()
+        };
+
+        logModel.create(log, function (err, doc) {
+
+           if(err){
+               deferred.reject(err);
+           } else{
+               deferred.resolve(doc);
+           }
+        });
+
+        return deferred.promise;
+    }
+
+    function dataUpdate(data) {
+        console.log("to update");
+        console.log(data);
+        var deferred = q.defer();
+
+        // needs fixing still, need to remove the _id off
+        // the inside array. 
+        dataModel.update(
+            {thing: data.thing},
+            {$push: {"details": data.details}},
+            function (err, doc) {
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(doc);
+                }
+            }
+        );
+
+        return deferred.promise;
     }
 
 };
