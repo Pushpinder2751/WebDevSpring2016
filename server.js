@@ -111,8 +111,8 @@ app.get('/api/users',function(req,res){
 // adding db and mongoose
 
 // needs fixing, project and assignment are not playing well together because of passportjs
-require("./public/project/server/app.js")(app, db, mongoose);
-//require("./public/assignment/server/app.js")(app, db, mongoose);
+//require("./public/project/server/app.js")(app, db, mongoose);
+require("./public/assignment/server/app.js")(app, db, mongoose);
 
 app.listen(port, ipaddress);
 app.listen(8080);
