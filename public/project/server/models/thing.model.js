@@ -22,7 +22,8 @@ module.exports = function(db, mongoose) {
         updateThingStatus: updateThingStatus,
         unfollowThing: unfollowThing,
         logUpdate: logUpdate,
-        dataUpdate: dataUpdate
+        dataUpdate: dataUpdate,
+        getAllThings: getAllThings
     };
     return api;
     
@@ -166,6 +167,23 @@ module.exports = function(db, mongoose) {
             }
         );
 
+        return deferred.promise;
+    }
+
+    function getAllThings() {
+        var deferred = q.defer();
+
+        thingModel.find(
+            function (err, things) {
+                if(err){
+                    console.log(err);
+                    deferred.reject(err);
+                }else {
+                    console.log("things :");
+                    console.log(things);
+                    deferred.resolve(things);
+                }
+            });
         return deferred.promise;
     }
 

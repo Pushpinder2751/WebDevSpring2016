@@ -6,10 +6,29 @@ module.exports = function (app, thingModel) {
     app.delete("/api/project/unfollowThing/:userId/:thingId", unfollowThing);
 
     app.get("/edison", sendUpdateToBoard);
+    app.get("/edison/initialUpdate", initialUpdate);
     app.post("/edison/lightSensor", lightSensorData);
+    app.post("/edison/tempSensor", tempSensorData);
+    app.post("/edison/soundSensor", soundSensorData);
     var updateFlag = false;
     var updatedThing = {};
     var update;
+    
+    // this function is called when the board just initializes
+    function initialUpdate(req, res) {
+        console.log("sending initial update: ");
+        thingModel.getAllThings()
+            .then(
+                //return all things if promise if resolved
+                function (doc) {
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
+    
     function sendUpdateToBoard(req, res) {
         // receive values from the board here
 
@@ -62,6 +81,48 @@ module.exports = function (app, thingModel) {
                 res.status(400).send(err);
             });
         res.json({light: "getting data"});
+
+    }
+
+    function tempSensorData(req, res) {
+        console.log("got temperature sensor data");
+        console.log(req.body);
+        var data = {};
+        data.thing = "tempSensor";
+        data.details = {
+            value: req.body.value,
+            time: Date.now()
+        };
+        thingModel.dataUpdate(data)
+            .then(function (doc) {
+                    console.log("db updated with data");
+
+                },
+                function (err) {
+                    res.status(400).send(err);
+                });
+        res.json({temp : "getting data"});
+
+    }
+
+    function soundSensorData(req, res) {
+        console.log("got sound sensor data");
+        console.log(req.body);
+        var data = {};
+        data.thing = "soundSensor";
+        data.details = {
+            value: req.body.value,
+            time: Date.now()
+        };
+        thingModel.dataUpdate(data)
+            .then(function (doc) {
+                    console.log("db updated with data");
+
+                },
+                function (err) {
+                    res.status(400).send(err);
+                });
+        res.json({sound: "getting data"});
 
     }
 
