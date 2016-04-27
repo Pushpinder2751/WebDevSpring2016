@@ -132,19 +132,10 @@ module.exports = function(db, mongoose){
         console.log("in update user");
         //console.log(userId);
         //console.log(user);
-        /*for(var i in mock){
-         // it might be _id here
-         if(mock[i]._id == userId){
-         mock[i].username = user.username;
-         mock[i].firstName = user.firstName;
-         mock[i].lastName = user.lastName;
-         mock[i].password = user.password;
-         console.log("updated user");
-         //console.log(mock[i]);
-         return mock[i];
-         }*/
+
+
         var deferred = q.defer();
-        userModel.update(
+        /*userModel.update(
             {_id: userId},
             {$set: user},
             function (err, doc) {
@@ -161,7 +152,31 @@ module.exports = function(db, mongoose){
                     });
                 }
 
-            });
+            });*/
+        userModel.findOne({_id: userId}, function (err, doc) {
+            if(err){
+                deferred.reject(err);
+            }else{
+                var foundUser = doc;
+                foundUser.firstName = user.firstName;
+                foundUser.lastName = user.lastName;
+                foundUser.emails = user.emails;
+                foundUser.phones = user.phones;
+                foundUser.roles = user.roles;
+                console.log(foundUser);
+                foundUser.save(function (err, doc) {
+                 if(err){
+                 console.log("update error");
+                 deferred.reject(err);
+                 }else{
+                 console.log("updated");
+                 console.log(doc);
+                 deferred.resolve(doc);
+                 }});
+
+            }
+        });
+
         return deferred.promise;
     }
 

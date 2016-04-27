@@ -99,6 +99,9 @@
             console.log(details.length);
             var x = 0;
             vm.graphStartingTime = new Date(details[0].time);
+
+            console.log(" this is the time!!!");
+            console.log(vm.graphStartingTime);
             if(details.length >= 100){
                 var req_length = 0;
                 for(var i = (req_length); i < 100; i = i+1 ){
