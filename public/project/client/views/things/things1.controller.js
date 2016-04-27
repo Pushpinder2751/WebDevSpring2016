@@ -8,7 +8,7 @@
         console.log("hello from Things1controller");
 
         var vm = this;
-        $scope.selected = -1; // initially
+        vm.selected = -1; // initially
 
         var userId = -1;
         if(!$rootScope.currentUser){

@@ -14,6 +14,7 @@
         vm.currerntTime;
         vm.timerFlag = true;
         vm.getThingData = getThingData;
+        vm.plotChart = plotChart;
 
 
         vm.currentThing = $rootScope.thing;
@@ -26,6 +27,7 @@
         function init() {
            console.log("init does nothing for now");
            getThingData(vm.currentThing);
+
         }init();
 
 
@@ -59,7 +61,7 @@
 
         function timerDecrement(time) {
             console.log("i am decreasing");
-            $interval(timerHelper, 100, time);
+            $interval(timerHelper, 1000, time);
 
         }
 
@@ -87,7 +89,71 @@
                 .then(function (response) {
                     console.log("got thing data");
                     console.log(response.data);
+                    refactorDataForCharts(response.data);
                 })
+        }
+
+        function refactorDataForCharts(data) {
+            var chartData = [];
+            var details = data[0].details;
+            console.log(details.length);
+            var x = 0;
+            vm.graphStartingTime = new Date(details[0].time);
+            if(details.length >= 100){
+                var req_length = 0;
+                for(var i = (req_length); i < 100; i = i+1 ){
+                   // console.log(details[i]);
+
+                    var temp = [x, details[i].value];
+                    x += 2;
+                     console.log(temp);
+                    chartData.push(temp);
+                }
+            }else{
+                for(var i = 0; i < details.length; i = i+1 ){
+                    // console.log(details[i]);
+                    var temp = [x, details[i].value];
+                    x +=2;
+                    // console.log(temp);
+                    chartData.push(temp);
+                }
+
+
+
+            }
+            plotChart(chartData);
+
+        }
+
+        function plotChart(chartData) {
+
+            google.charts.load('current', {packages: ['corechart', 'line']});
+            google.charts.setOnLoadCallback(drawBasic);
+
+            function drawBasic() {
+
+                var data = new google.visualization.DataTable();
+                data.addColumn('number', 'X');
+                data.addColumn('number', vm.currentThing.title);
+
+                data.addRows(chartData);
+
+                var options = {
+                    hAxis: {
+                        title: 'Starting Time :'+vm.graphStartingTime.getMonth() + "/"+vm.graphStartingTime.getDay() + "/"+
+                        vm.graphStartingTime.getFullYear() +" "+vm.graphStartingTime.getHours()+":"+
+                        vm.graphStartingTime.getMinutes()+":"+vm.graphStartingTime.getSeconds()
+                    },
+                    vAxis: {
+                        title: 'Intensity'
+                    }
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+                chart.draw(data, options);
+            }
+
         }
 
 
