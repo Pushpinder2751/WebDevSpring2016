@@ -203,13 +203,16 @@ module.exports = function(db, mongoose){
          // if user is not found
          console.log("no user by this username");
          return null;*/
+        console.log("in usermodel : finduser");
         var deferred = q.defer();
         userModel.findOne(
             {username: username},
             function (err, user) {
                 if(err){
+                    console.log(err);
                     deferred.reject(err)
                 }else{
+                    console.log(user);
                     deferred.resolve(user)
                 }
             });
