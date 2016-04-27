@@ -29,13 +29,14 @@ Connection URL: mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/
 // where are these variables coming from!?
 // Ans. When this server is at openshift, then it gets these variables from there.
 
-if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
+if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
     connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-            process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-            process.env.OPENSHIFT_NODEJS_HOST + ":" +
-            process.env.OPENSHIFT_NODEJS_PORT + "/" +
-            process.env.OPENSHIFT_APP_NAME;
+        process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+        process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+        process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+        process.env.OPENSHIFT_APP_NAME;
 }
+console.log(connectionString);
 // connect to the database  
 mongoose.connect(connectionString);
 
