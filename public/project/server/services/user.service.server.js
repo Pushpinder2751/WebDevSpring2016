@@ -161,7 +161,32 @@ module.exports = function(app, userModel){
 
         // first check if the user already exists with the same username;
         console.log("I am here");
-        userModel.findUserByUsername(newUser.username)
+
+        newUser.password = bcrypt.hashSync(newUser.password);
+        newUser = userModel.createUser(newUser)
+            // handle model promise
+            .then(
+                // login user if promise resolved
+                function (doc) {
+                    /*    req.session.currentUser = doc;
+                     // this does not work;
+                     //req.user = doc;
+                     console.log("sending back new user data");
+                     console.log(doc)
+                     next();*/
+                    // if you do not want to do the above implementation
+                    // alternate passport function
+                    if(doc){
+                        req.login(doc, function (err) {
+                            if(err){
+                                res.status(400).send(err);
+                            }else{
+                                res.json(doc);
+                            }
+
+                        });
+
+        /*userModel.findUserByUsername(newUser.username)
             .then(function (doc) {
                     console.log("return from find user by username");
                     if(doc == null){
@@ -174,12 +199,12 @@ module.exports = function(app, userModel){
                             .then(
                                 // login user if promise resolved
                                 function (doc) {
-                                    /*    req.session.currentUser = doc;
+                                    /!*    req.session.currentUser = doc;
                                      // this does not work;
                                      //req.user = doc;
                                      console.log("sending back new user data");
                                      console.log(doc)
-                                     next();*/
+                                     next();*!/
                                     // if you do not want to do the above implementation 
                                     // alternate passport function
                                     if(doc){
@@ -211,7 +236,7 @@ module.exports = function(app, userModel){
                     res.status(400).send(err);
                 });
 
-
+*/
 
 
 
