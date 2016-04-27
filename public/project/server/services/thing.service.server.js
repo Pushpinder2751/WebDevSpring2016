@@ -3,7 +3,8 @@ module.exports = function (app, thingModel) {
     app.get("/api/project/thing/:thing/:userId", trackThing);
     app.get("/api/project/thing/:userId", findThingsForCurrentUser);
     app.put("/api/project/updateThing", updateThingStatus);
-    app.delete("/api/project/unfollowThing/:userId/:thingId", unfollowThing);
+    app.delete("/api/project/unfollowThing/:userId/:thing", unfollowThing);
+    app.get("/api/project/thingData/:thing", getThingData);
 
     app.get("/edison", sendUpdateToBoard);
     app.get("/edison/initialUpdate", initialUpdate);
@@ -208,5 +209,19 @@ module.exports = function (app, thingModel) {
             },function (err) {
                 res.status(400).send(err);
             });
+    }
+    
+    function getThingData(req, res) {
+        var thingName = req.params.thing;
+        console.log("in getThingdata.. for :"+thingName);
+        thingModel.getThingData(thingName)
+            .then(function (doc) {
+                console.log("gotThingData");
+                res.json(doc);
+                
+            },function (err) {
+                res.status(400).send(err);
+            });
+        
     }
 }

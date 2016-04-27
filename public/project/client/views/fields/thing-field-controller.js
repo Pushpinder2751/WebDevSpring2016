@@ -13,7 +13,7 @@
         vm.startTimer= startTimer;
         vm.currerntTime;
         vm.timerFlag = true;
-        
+        vm.getThingData = getThingData;
 
 
         vm.currentThing = $rootScope.thing;
@@ -25,6 +25,7 @@
         
         function init() {
            console.log("init does nothing for now");
+           getThingData(vm.currentThing);
         }init();
 
 
@@ -75,6 +76,18 @@
                 return;
             }
             vm.currentTime -= 1;
+        }
+
+        // needs reconfiguration, as it is not good design to
+        // get all the data for charts, will get heavy over time.
+        function getThingData(thing) {
+            console.log("calling data");
+            ThingService
+                .getThingData(thing)
+                .then(function (response) {
+                    console.log("got thing data");
+                    console.log(response.data);
+                })
         }
 
 

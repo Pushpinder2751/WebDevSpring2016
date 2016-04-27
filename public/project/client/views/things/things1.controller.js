@@ -39,6 +39,7 @@
         vm.trackThing = trackThing;
         vm.selectThing = selectThing;
         vm.unfollowThing = unfollowThing;
+        
 
         function trackThing(thing) {
             console.log("Track this");
@@ -80,6 +81,7 @@
                     thingsForCurrentUser();
                 });
         }
+        
 
 
 

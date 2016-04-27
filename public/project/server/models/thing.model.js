@@ -23,7 +23,8 @@ module.exports = function(db, mongoose) {
         unfollowThing: unfollowThing,
         logUpdate: logUpdate,
         dataUpdate: dataUpdate,
-        getAllThings: getAllThings
+        getAllThings: getAllThings,
+        getThingData: getThingData
     };
     return api;
     
@@ -184,6 +185,23 @@ module.exports = function(db, mongoose) {
                     deferred.resolve(things);
                 }
             });
+        return deferred.promise;
+    }
+    
+    function getThingData(thingName) {
+        var deferred = q.defer();
+
+        dataModel.find({thing: thingName},
+            function (err, doc) {
+                if(err){
+                    console.log(err);
+                    deferred.reject(err);
+                }else{
+                    console.log("got Thing data");
+                    deferred.resolve(doc);
+                }
+            }
+        );
         return deferred.promise;
     }
 

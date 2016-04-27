@@ -10,7 +10,8 @@
             trackThing: trackThing,
             findThingsForCurrentUser: findThingsForCurrentUser,
             updateThingStatus: updateThingStatus,
-            unfollowThing: unfollowThing
+            unfollowThing: unfollowThing,
+            getThingData: getThingData
         };
 
         return api;
@@ -40,6 +41,11 @@
             console.log("unfollowing...");
             // for now just sending userId, might need user to create log
             return $http.delete("/api/project/unfollowThing/"+userId+"/"+thing._id);
+        }
+
+        function getThingData(thing) {
+
+            return $http.get("/api/project/thingData/"+thing.title);
         }
     }
 
