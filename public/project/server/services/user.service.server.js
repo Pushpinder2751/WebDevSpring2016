@@ -161,7 +161,6 @@ module.exports = function(app, userModel){
 
         // first check if the user already exists with the same username;
         console.log("I am here");
-
         newUser.password = bcrypt.hashSync(newUser.password);
         newUser = userModel.createUser(newUser)
             // handle model promise
@@ -185,8 +184,18 @@ module.exports = function(app, userModel){
                             }
 
                         });
+                    }
 
-        /*userModel.findUserByUsername(newUser.username)
+
+                },
+                // send error if promise rejected
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+
+
+    /*    userModel.findUserByUsername(newUser.username)
             .then(function (doc) {
                     console.log("return from find user by username");
                     if(doc == null){
@@ -236,9 +245,9 @@ module.exports = function(app, userModel){
                     res.status(400).send(err);
                 });
 
+
+
 */
-
-
 
     }
 
