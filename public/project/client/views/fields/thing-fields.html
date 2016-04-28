@@ -7,8 +7,8 @@
 
         <h1>Thing : {{model.currentThing.title}}</h1>
         <ul class = "nav nav-tabs">
-            <li role="presentation"><a href="#/thing-field">Things</a></li>
-            <li role="presentation" class="active"><a href="#/thing/{{thing._id}}/fields">Fields</a></li>
+            <li role="presentation"><a href="">Things</a></li>
+            <li role="presentation" class="active"><a href="">Fields</a></li>
         </ul>
         <br>
         <form class="form-horizontal">
@@ -29,7 +29,7 @@
 
                 <label  class="col-sm-2 control-label">Timer</label>
                 <div class="col-sm-4 form-inline" ng-if="model.timerFlag">
-                    <input type="number" name="timer" ng-model="model.timer.value"  min="1" max="10">
+                    <input type="number" name="timer" ng-model="model.timer.value" value="1" min="1" max="10">
                     <button type="submit" class="btn btn-warning "ng-click="model.startTimer()" >Start Timer</button>
 
 
