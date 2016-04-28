@@ -198,7 +198,7 @@ module.exports = function (app, thingModel) {
 
     function unfollowThing(req, res) {
         var userId = req.params.userId;
-        var thingId = req.params.thingId;
+        var thingId = req.params.thing;
         console.log("unfollowing ..");
         console.log(userId);
         console.log(thingId);
